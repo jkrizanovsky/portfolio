@@ -94,17 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Gallery section click to navigate
-    document.querySelectorAll('.gallery-section').forEach(section => {
-        section.addEventListener('click', function(e) {
-            // Don't trigger if clicking on a video link
-            if (e.target.closest('.video-link')) {
-                return;
-            }
-            
-            // Navigation is handled by onclick attribute in HTML
-        });
-    });
 });
 
 // Add some console branding
