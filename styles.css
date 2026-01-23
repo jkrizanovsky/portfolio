@@ -39,8 +39,8 @@ body {
     z-index: 1000;
     background: rgba(13, 8, 16, 0.85);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--text-primary);
-    box-shadow: 0 4px 30px rgba(255, 254, 245, 0.5);
+    border-bottom: 1px solid var(--plum-accent);
+    box-shadow: 0 4px 30px rgba(107, 61, 126, 0.6);
 }
 
 .nav-container {
@@ -61,6 +61,16 @@ body {
     background-clip: text;
     letter-spacing: -0.5px;
     text-transform: uppercase;
+}
+
+.logo-link {
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
 }
 
 .toggle-btn {

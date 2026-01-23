@@ -94,18 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Gallery section click to expand
-    document.querySelectorAll('.gallery-section').forEach(section => {
-        section.addEventListener('click', function(e) {
-            // Don't trigger if clicking on a video link
-            if (e.target.closest('.video-link')) {
-                return;
-            }
-            
-            // Toggle expanded state
-            this.classList.toggle('expanded');
-        });
-    });
 });
 
 // Add some console branding
