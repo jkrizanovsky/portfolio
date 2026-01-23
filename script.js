@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Switch to Gallery View
             galleryView.classList.add('active');
             cvView.classList.remove('active');
-            toggleText.textContent = 'Switch to CV';
+            toggleText.textContent = 'CV';
         } else {
             // Switch to CV View
             galleryView.classList.remove('active');
             cvView.classList.add('active');
-            toggleText.textContent = 'Switch to Gallery';
+            toggleText.textContent = 'Portfolio';
         }
         
         // Smooth scroll to top
@@ -106,29 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.toggle('expanded');
         });
     });
-    
-    // Print functionality for CV
-    if (cvView) {
-        const printBtn = document.createElement('button');
-        printBtn.textContent = '🖨️ Print CV';
-        printBtn.className = 'print-btn';
-        
-        printBtn.addEventListener('click', function() {
-            window.print();
-        });
-        
-        // Show print button only in CV view
-        const updatePrintButton = () => {
-            if (!isGalleryView) {
-                printBtn.style.display = 'block';
-            } else {
-                printBtn.style.display = 'none';
-            }
-        };
-        
-        toggleBtn.addEventListener('click', updatePrintButton);
-        document.body.appendChild(printBtn);
-    }
 });
 
 // Add some console branding
