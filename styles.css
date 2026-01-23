@@ -1,16 +1,16 @@
 /* Plum Noir Color Palette */
 :root {
-    --plum-darkest: #1a0f1f;
-    --plum-dark: #2d1b3d;
-    --plum-medium: #4a2c5e;
-    --plum-light: #6b3d7e;
-    --plum-accent: #8b4d9e;
-    --plum-glow: #a65dbf;
-    --noir-black: #0d0810;
-    --noir-gray: #2a2430;
-    --text-primary: #e8d5f0;
-    --text-secondary: #c5a7d1;
-    --text-muted: #9b7fa8;
+    --plum-darkest: #0d0612;
+    --plum-dark: #1a0f1f;
+    --plum-medium: #2d1b3d;
+    --plum-light: #4a2c5e;
+    --plum-accent: #6b3d7e;
+    --plum-glow: #8b4d9e;
+    --noir-black: #050308;
+    --noir-gray: #1a1520;
+    --text-primary: #fffef5;
+    --text-secondary: #fffef5;
+    --text-muted: #fffef5;
     --gold-accent: #d4af37;
 }
 
@@ -539,31 +539,6 @@ body {
         height: 50px;
         font-size: 2rem;
     }
-}
-
-/* Print Button */
-.print-btn {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--plum-medium), var(--plum-light));
-    border: 1px solid var(--plum-accent);
-    border-radius: 50px;
-    color: var(--text-primary);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(139, 77, 158, 0.3);
-    transition: all 0.3s ease;
-    z-index: 999;
-    display: none;
-}
-
-.print-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(139, 77, 158, 0.5);
-    background: linear-gradient(135deg, var(--plum-light), var(--plum-accent));
 }
 
 /* Loading Animation */
