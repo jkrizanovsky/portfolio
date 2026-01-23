@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Gallery section click to expand
+    // Gallery section click to navigate
     document.querySelectorAll('.gallery-section').forEach(section => {
         section.addEventListener('click', function(e) {
             // Don't trigger if clicking on a video link
@@ -102,8 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Toggle expanded state
-            this.classList.toggle('expanded');
+            // Navigation is handled by onclick attribute in HTML
         });
     });
 });

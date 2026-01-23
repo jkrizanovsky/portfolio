@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography - Digital Creator Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-link"><h1 class="logo">Portfolio</h1></a>
+            <div class="nav-toggle">
+                <button id="viewToggle" class="toggle-btn">
+                    <span id="toggleText">CV</span>
+                    <span class="toggle-icon">🔄</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Page -->
+    <div class="gallery-page">
+        <div class="page-hero">
+            <h2 class="page-title">Photography</h2>
+            <p class="page-subtitle">Capturing moments & emotions</p>
+        </div>
+
+        <!-- Modern Gallery/Slideshow -->
+        <div class="slideshow-container">
+            <div class="slideshow-gallery">
+                <!-- Gallery Items - Add your actual images here -->
+                <div class="gallery-item active">
+                    <img src="assets/photography/placeholder1.jpg" alt="Photography Work 1" onerror="this.style.background='linear-gradient(135deg, #1b2d3d 0%, #2c4a5e 100%)'">
+                    <div class="gallery-caption">Portrait Photography</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/photography/placeholder2.jpg" alt="Photography Work 2" onerror="this.style.background='linear-gradient(135deg, #2c4a5e 0%, #3d6b7e 100%)'">
+                    <div class="gallery-caption">Landscape Photography</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/photography/placeholder3.jpg" alt="Photography Work 3" onerror="this.style.background='linear-gradient(135deg, #3d6b7e 0%, #4d8b9e 100%)'">
+                    <div class="gallery-caption">Commercial Photography</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/photography/placeholder4.jpg" alt="Photography Work 4" onerror="this.style.background='linear-gradient(135deg, #1b2d3d 0%, #3d6b7e 100%)'">
+                    <div class="gallery-caption">Event Photography</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/photography/placeholder5.jpg" alt="Photography Work 5" onerror="this.style.background='linear-gradient(135deg, #2c4a5e 0%, #4d8b9e 100%)'">
+                    <div class="gallery-caption">Product Photography</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/photography/placeholder6.jpg" alt="Photography Work 6" onerror="this.style.background='linear-gradient(135deg, #3d6b7e 0%, #2c4a5e 100%)'">
+                    <div class="gallery-caption">Street Photography</div>
+                </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <button class="slideshow-control prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="slideshow-control next" onclick="changeSlide(1)">&#10095;</button>
+
+            <!-- Dots/Indicators -->
+            <div class="slideshow-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+            </div>
+        </div>
+
+        <!-- Thumbnail Grid -->
+        <div class="thumbnail-grid">
+            <div class="thumbnail active" onclick="currentSlide(1)">
+                <img src="assets/photography/placeholder1.jpg" alt="Thumbnail 1" onerror="this.style.background='linear-gradient(135deg, #1b2d3d 0%, #2c4a5e 100%)'">
+            </div>
+            <div class="thumbnail" onclick="currentSlide(2)">
+                <img src="assets/photography/placeholder2.jpg" alt="Thumbnail 2" onerror="this.style.background='linear-gradient(135deg, #2c4a5e 0%, #3d6b7e 100%)'">
+            </div>
+            <div class="thumbnail" onclick="currentSlide(3)">
+                <img src="assets/photography/placeholder3.jpg" alt="Thumbnail 3" onerror="this.style.background='linear-gradient(135deg, #3d6b7e 0%, #4d8b9e 100%)'">
+            </div>
+            <div class="thumbnail" onclick="currentSlide(4)">
+                <img src="assets/photography/placeholder4.jpg" alt="Thumbnail 4" onerror="this.style.background='linear-gradient(135deg, #1b2d3d 0%, #3d6b7e 100%)'">
+            </div>
+            <div class="thumbnail" onclick="currentSlide(5)">
+                <img src="assets/photography/placeholder5.jpg" alt="Thumbnail 5" onerror="this.style.background='linear-gradient(135deg, #2c4a5e 0%, #4d8b9e 100%)'">
+            </div>
+            <div class="thumbnail" onclick="currentSlide(6)">
+                <img src="assets/photography/placeholder6.jpg" alt="Thumbnail 6" onerror="this.style.background='linear-gradient(135deg, #3d6b7e 0%, #2c4a5e 100%)'">
+            </div>
+        </div>
+    </div>
+
+    <script src="gallery.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
