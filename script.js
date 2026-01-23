@@ -112,23 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const printBtn = document.createElement('button');
         printBtn.textContent = '🖨️ Print CV';
         printBtn.className = 'print-btn';
-        printBtn.style.cssText = `
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--plum-medium), var(--plum-light));
-            border: 1px solid var(--plum-accent);
-            border-radius: 50px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(139, 77, 158, 0.3);
-            transition: all 0.3s ease;
-            z-index: 999;
-            display: none;
-        `;
         
         printBtn.addEventListener('click', function() {
             window.print();
