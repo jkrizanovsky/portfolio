@@ -39,8 +39,8 @@ body {
     z-index: 1000;
     background: rgba(13, 8, 16, 0.85);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(139, 77, 158, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid var(--text-primary);
+    box-shadow: 0 4px 30px rgba(255, 254, 245, 0.5);
 }
 
 .nav-container {
@@ -55,7 +55,7 @@ body {
 .logo {
     font-size: 1.8rem;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--plum-glow), var(--gold-accent));
+    background: var(--text-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -69,19 +69,19 @@ body {
     gap: 0.5rem;
     padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, var(--plum-medium), var(--plum-light));
-    border: 1px solid var(--plum-accent);
+    border: 1px solid var(--text-primary);
     border-radius: 50px;
     color: var(--text-primary);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(139, 77, 158, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 254, 245, 0.3);
 }
 
 .toggle-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(139, 77, 158, 0.5);
+    box-shadow: 0 6px 25px rgba(255, 254, 245, 0.5);
     background: linear-gradient(135deg, var(--plum-light), var(--plum-accent));
 }
 
@@ -129,7 +129,7 @@ body {
     font-size: 4rem;
     font-weight: 900;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--text-primary), var(--plum-glow), var(--gold-accent));
+    background: var(--text-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -161,15 +161,15 @@ body {
     overflow: hidden;
     aspect-ratio: 1;
     background: linear-gradient(135deg, var(--plum-dark), var(--plum-medium));
-    border: 2px solid rgba(139, 77, 158, 0.3);
+    border: 2px solid var(--text-primary);
     transition: all 0.4s ease;
     cursor: pointer;
 }
 
 .gallery-section:hover {
     transform: translateY(-10px) scale(1.02);
-    border-color: var(--plum-accent);
-    box-shadow: 0 20px 60px rgba(139, 77, 158, 0.4);
+    border-color: var(--text-primary);
+    box-shadow: 0 20px 60px rgba(255, 254, 245, 0.4);
 }
 
 .gallery-section:hover .section-overlay {
@@ -197,7 +197,7 @@ body {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--plum-glow), var(--gold-accent));
+    background: var(--text-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -286,7 +286,7 @@ body {
 .cv-header {
     text-align: center;
     padding: 3rem 0;
-    border-bottom: 2px solid rgba(139, 77, 158, 0.3);
+    border-bottom: 2px solid var(--text-primary);
     margin-bottom: 3rem;
 }
 
@@ -294,7 +294,7 @@ body {
     font-size: 3.5rem;
     font-weight: 900;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--plum-glow), var(--gold-accent));
+    background: var(--text-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -329,7 +329,7 @@ body {
     font-size: 2rem;
     font-weight: 800;
     margin-bottom: 2rem;
-    color: var(--plum-accent);
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -341,7 +341,7 @@ body {
     margin-bottom: 2.5rem;
     padding: 2rem;
     background: rgba(74, 44, 94, 0.2);
-    border-left: 3px solid var(--plum-accent);
+    border-left: 3px solid var(--text-primary);
     border-radius: 10px;
     transition: all 0.3s ease;
 }
@@ -349,13 +349,13 @@ body {
 .timeline-item:hover {
     background: rgba(74, 44, 94, 0.3);
     transform: translateX(10px);
-    box-shadow: 0 10px 30px rgba(139, 77, 158, 0.3);
+    box-shadow: 0 10px 30px rgba(255, 254, 245, 0.3);
 }
 
 .timeline-date {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--plum-glow);
+    color: var(--text-primary);
     padding-top: 0.2rem;
 }
 
@@ -405,13 +405,13 @@ body {
     background: rgba(74, 44, 94, 0.2);
     padding: 2rem;
     border-radius: 10px;
-    border: 1px solid rgba(139, 77, 158, 0.2);
+    border: 1px solid var(--text-primary);
     transition: all 0.3s ease;
 }
 
 .skill-category:hover {
     background: rgba(74, 44, 94, 0.3);
-    border-color: var(--plum-accent);
+    border-color: var(--text-primary);
     transform: translateY(-5px);
 }
 
@@ -419,7 +419,7 @@ body {
     font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: var(--plum-glow);
+    color: var(--text-primary);
 }
 
 .skill-category ul {
