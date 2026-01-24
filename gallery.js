@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the first slide
     if (document.querySelector('.slideshow-gallery')) {
         showSlide(currentSlideIndex);
+        updateSlideCounter();
     }
     
     // Add keyboard navigation for gallery
@@ -50,11 +51,23 @@ document.addEventListener('DOMContentLoaded', function() {
 // Change slide by n (next/previous)
 function changeSlide(n) {
     showSlide(currentSlideIndex += n);
+    updateSlideCounter();
 }
 
 // Show specific slide
 function currentSlide(n) {
     showSlide(currentSlideIndex = n);
+    updateSlideCounter();
+}
+
+// Update slide counter display
+function updateSlideCounter() {
+    const slides = document.querySelectorAll('.gallery-item');
+    const counter = document.querySelector('.slide-counter');
+    
+    if (counter && slides.length > 0) {
+        counter.textContent = `${currentSlideIndex} • ${slides.length}`;
+    }
 }
 
 // Main slideshow function
@@ -73,9 +86,9 @@ function showSlide(n) {
         currentSlideIndex = slides.length;
     }
     
-    // Hide all slides
+    // Remove all classes from slides
     slides.forEach(slide => {
-        slide.classList.remove('active');
+        slide.classList.remove('active', 'prev', 'next');
     });
     
     // Remove active class from dots
@@ -88,9 +101,30 @@ function showSlide(n) {
         thumb.classList.remove('active');
     });
     
+    // Calculate prev and next indices
+    let prevIndex = currentSlideIndex - 2;
+    let nextIndex = currentSlideIndex;
+    
+    if (prevIndex < 0) {
+        prevIndex = slides.length + prevIndex;
+    }
+    if (nextIndex >= slides.length) {
+        nextIndex = nextIndex - slides.length;
+    }
+    
     // Show current slide
     if (slides[currentSlideIndex - 1]) {
         slides[currentSlideIndex - 1].classList.add('active');
+    }
+    
+    // Show prev slide
+    if (slides[prevIndex]) {
+        slides[prevIndex].classList.add('prev');
+    }
+    
+    // Show next slide
+    if (slides[nextIndex]) {
+        slides[nextIndex].classList.add('next');
     }
     
     // Activate current dot

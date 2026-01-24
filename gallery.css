@@ -34,7 +34,7 @@
 /* Slideshow Container */
 .slideshow-container {
     position: relative;
-    max-width: 1000px;
+    max-width: 900px;
     margin: 2.5rem auto;
     padding: 0 2rem;
 }
@@ -42,31 +42,55 @@
 .slideshow-gallery {
     position: relative;
     width: 100%;
-    aspect-ratio: 16/9;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+/* Gallery Items - Carousel Layout */
+.gallery-item {
+    position: absolute;
+    width: 70%;
+    height: 100%;
     border-radius: 15px;
     overflow: hidden;
     background: var(--plum-dark);
     border: 2px solid var(--text-primary);
     box-shadow: 0 8px 35px rgba(255, 255, 255, 0.25);
-}
-
-/* Gallery Items */
-.gallery-item {
-    display: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    animation: slideIn 0.5s ease-in-out;
+    opacity: 0;
+    transform: translateX(0) scale(0.7);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .gallery-item.active {
-    display: block;
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.gallery-item.prev {
+    opacity: 0.5;
+    transform: translateX(-85%) scale(0.7);
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.gallery-item.next {
+    opacity: 0.5;
+    transform: translateX(85%) scale(0.7);
+    z-index: 2;
+    pointer-events: auto;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .gallery-caption {
@@ -117,13 +141,28 @@
 .slideshow-dots {
     text-align: center;
     padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.slide-counter {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-right: 0.5rem;
+}
+
+.dots-container {
+    display: inline-flex;
+    gap: 8px;
 }
 
 .dot {
     display: inline-block;
     width: 15px;
     height: 15px;
-    margin: 0 8px;
     background: var(--plum-light);
     border: 2px solid var(--text-primary);
     border-radius: 50%;
@@ -453,6 +492,22 @@
         font-size: 1.1rem;
     }
 
+    .slideshow-gallery {
+        height: 400px;
+    }
+
+    .gallery-item {
+        width: 80%;
+    }
+
+    .gallery-item.prev {
+        transform: translateX(-90%) scale(0.6);
+    }
+
+    .gallery-item.next {
+        transform: translateX(90%) scale(0.6);
+    }
+
     .slideshow-control {
         font-size: 1.5rem;
         padding: 0.7rem 1rem;
@@ -512,6 +567,20 @@
         padding: 0 1rem;
     }
 
+    .slideshow-gallery {
+        height: 350px;
+    }
+
+    .gallery-item {
+        width: 85%;
+    }
+
+    .gallery-item.prev,
+    .gallery-item.next {
+        opacity: 0.3;
+        transform: translateX(0) scale(0.5);
+    }
+
     .slideshow-control {
         font-size: 1.2rem;
         padding: 0.5rem 0.8rem;
@@ -551,5 +620,9 @@
 
     .showcase-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .slide-counter {
+        font-size: 0.9rem;
     }
 }
