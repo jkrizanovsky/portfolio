@@ -186,12 +186,11 @@ function pauseAllVideos() {
             if (url.hostname === 'www.youtube.com' || url.hostname === 'youtube.com') {
                 iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
             } else if (url.hostname === 'www.instagram.com' || url.hostname === 'instagram.com') {
-                // For Instagram, we need to reload the iframe to stop it
-                const currentSrc = iframe.src;
-                iframe.src = 'about:blank';
+                // For Instagram, hide the iframe to stop playback without reloading
+                iframe.style.visibility = 'hidden';
                 setTimeout(() => {
-                    iframe.src = currentSrc;
-                }, 10);
+                    iframe.style.visibility = 'visible';
+                }, 100);
             } else {
                 // For other embeds, try generic postMessage pause
                 iframe.contentWindow.postMessage('{"event":"command","func":"pause","args":""}', '*');
