@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.slideshow-gallery')) {
         showSlide(currentSlideIndex);
         updateSlideCounter();
+        
+        // Initialize drag and drop for gallery items
+        initializeDragAndDrop();
     }
     
     // Add keyboard navigation for gallery
@@ -218,3 +221,72 @@ function autoSlide() {
 // Uncomment to enable auto-advance every 5 seconds
 // setInterval(autoSlide, 5000);
 */
+
+// Drag and Drop functionality for gallery items
+function initializeDragAndDrop() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    // Constants for drag and drop visual feedback
+    const DRAG_SCALE_FACTOR = 1.05;
+    const ACTIVE_TRANSFORM = 'translateX(0) scale(1)';
+    
+    galleryItems.forEach((item, index) => {
+        const itemIndex = index + 1; // 1-based index
+        
+        // Make items draggable
+        item.setAttribute('draggable', 'true');
+        item.style.cursor = 'grab';
+        
+        // Drag start event
+        item.addEventListener('dragstart', function(e) {
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', itemIndex);
+            this.style.opacity = '0.5';
+            this.style.cursor = 'grabbing';
+        });
+        
+        // Drag end event
+        item.addEventListener('dragend', function(e) {
+            this.style.opacity = '';
+            this.style.cursor = 'grab';
+        });
+        
+        // Drag over event (to allow drop)
+        item.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (this.classList.contains('active')) {
+                this.style.transform = `translateX(0) scale(${DRAG_SCALE_FACTOR})`;
+            }
+        });
+        
+        // Drag leave event
+        item.addEventListener('dragleave', function(e) {
+            if (this.classList.contains('active')) {
+                this.style.transform = ACTIVE_TRANSFORM;
+            }
+        });
+        
+        // Drop event
+        item.addEventListener('drop', function(e) {
+            e.preventDefault();
+            const draggedIndex = parseInt(e.dataTransfer.getData('text/plain'));
+            const targetIndex = itemIndex;
+            
+            if (draggedIndex !== targetIndex) {
+                // Change to the target slide
+                currentSlide(targetIndex);
+            }
+            
+            this.style.transform = '';
+        });
+        
+        // Click event for easier interaction
+        item.addEventListener('click', function(e) {
+            // Only switch if clicking on non-active items
+            if (!this.classList.contains('active')) {
+                currentSlide(itemIndex);
+            }
+        });
+    });
+}
