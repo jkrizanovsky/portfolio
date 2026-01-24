@@ -216,6 +216,13 @@
     text-decoration: none;
 }
 
+.local-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
 .play-icon-large {
     position: absolute;
     top: 50%;
