@@ -347,7 +347,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(13, 8, 16, 0.7);
+    background: rgba(13, 8, 16, 0.5);
     backdrop-filter: blur(5px);
     transition: opacity 0.4s ease;
     z-index: 2;
@@ -372,14 +372,18 @@ body {
 }
 
 .section-content {
-    opacity: 0;
+    opacity: 0.6;
     transition: opacity 0.4s ease;
     height: 100%;
 }
 
+.gallery-section:hover .section-content {
+    opacity: 1;
+}
+
 .media-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 0;
     height: 100%;
 }
