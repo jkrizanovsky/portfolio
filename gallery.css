@@ -293,6 +293,17 @@
     letter-spacing: 0.5px;
 }
 
+.company-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.company-link:hover {
+    color: var(--plum-glow);
+    text-decoration: underline;
+}
+
 .company-description {
     font-size: 1.2rem;
     color: var(--text-secondary);
