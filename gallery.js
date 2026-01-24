@@ -226,6 +226,10 @@ function autoSlide() {
 function initializeDragAndDrop() {
     const galleryItems = document.querySelectorAll('.gallery-item');
     
+    // Constants for drag and drop visual feedback
+    const DRAG_SCALE_FACTOR = 1.05;
+    const ACTIVE_TRANSFORM = 'translateX(0) scale(1)';
+    
     galleryItems.forEach((item, index) => {
         const itemIndex = index + 1; // 1-based index
         
@@ -251,15 +255,15 @@ function initializeDragAndDrop() {
         item.addEventListener('dragover', function(e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
-            this.style.transform = this.classList.contains('active') 
-                ? 'translateX(0) scale(1.05)' 
-                : this.style.transform;
+            if (this.classList.contains('active')) {
+                this.style.transform = `translateX(0) scale(${DRAG_SCALE_FACTOR})`;
+            }
         });
         
         // Drag leave event
         item.addEventListener('dragleave', function(e) {
             if (this.classList.contains('active')) {
-                this.style.transform = 'translateX(0) scale(1)';
+                this.style.transform = ACTIVE_TRANSFORM;
             }
         });
         

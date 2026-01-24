@@ -97,13 +97,13 @@
     cursor: pointer;
 }
 
-.gallery-item.prev:hover,
-.gallery-item.next:hover {
+.gallery-item.prev:hover {
     opacity: 0.7;
     transform: translateX(-85%) scale(0.75);
 }
 
 .gallery-item.next:hover {
+    opacity: 0.7;
     transform: translateX(85%) scale(0.75);
 }
 
