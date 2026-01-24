@@ -95,6 +95,12 @@
     object-fit: contain;
 }
 
+/* Rotate specific photos in photography slideshow */
+.gallery-item.photo-9 img,
+.gallery-item.photo-10 img {
+    transform: rotate(90deg);
+}
+
 .gallery-caption {
     position: absolute;
     bottom: 0;

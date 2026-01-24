@@ -175,9 +175,9 @@ function showSlide(n) {
     }
 }
 
-// Function to pause all videos (YouTube iframes and local videos)
+// Function to pause all videos (YouTube iframes, Instagram iframes, and local videos)
 function pauseAllVideos() {
-    // Pause YouTube iframes
+    // Pause all iframes (YouTube, Instagram, and other embeds)
     const iframes = document.querySelectorAll('.video-iframe');
     iframes.forEach(iframe => {
         // Send postMessage to pause the video
@@ -185,9 +185,18 @@ function pauseAllVideos() {
             const url = new URL(iframe.src);
             if (url.hostname === 'www.youtube.com' || url.hostname === 'youtube.com') {
                 iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            } else if (url.hostname === 'www.instagram.com' || url.hostname === 'instagram.com') {
+                // For Instagram, hide the iframe to stop playback without reloading
+                iframe.style.visibility = 'hidden';
+                setTimeout(() => {
+                    iframe.style.visibility = 'visible';
+                }, 100);
+            } else {
+                // For other embeds, try generic postMessage pause
+                iframe.contentWindow.postMessage('{"event":"command","func":"pause","args":""}', '*');
             }
         } catch (e) {
-            // Invalid URL, skip
+            // Invalid URL or cross-origin issue, skip
         }
     });
     

@@ -298,6 +298,92 @@
         </div>
     </footer>
 
+    <script>
+        // Random thumbnail selection for main page boxes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Define available images for each category
+            const graphicDesignImages = [
+                'assets/graphic-design/Mol Cup finále.jpg',
+                'assets/graphic-design/sparta1.jpg',
+                'assets/graphic-design/grandhotel.png',
+                'assets/graphic-design/1.png',
+                'assets/graphic-design/merch.png',
+                'assets/graphic-design/futsal1.png',
+                'assets/graphic-design/Diouf.jpg',
+                'assets/graphic-design/Eneme.png',
+                'assets/graphic-design/Kuchta Belmondo!.jpg',
+                'assets/graphic-design/Firpo tribute.png',
+                'assets/graphic-design/phone mockup.png',
+                'assets/graphic-design/what.jpg',
+                'assets/graphic-design/tombola7.jpg',
+                'assets/graphic-design/LK37 HOMECOMING.jpg',
+                'assets/graphic-design/Šulc City.jpg'
+            ];
+
+            const photographyImages = [
+                'assets/photography/DDS/2.jpg',
+                'assets/photography/DUKKAR/281.jpg',
+                'assets/photography/DUKPIS/27e.jpg',
+                'assets/photography/MBLACS/658e.png',
+                'assets/photography/architecture/113e.jpg',
+                'assets/photography/product/krizanovskyj-fotoreklama.jpg',
+                'assets/photography/CER24/e.jpg',
+                'assets/photography/LASKBW/149.png',
+                'assets/photography/ZUGCEB/DSC_0500.JPG',
+                'assets/photography/birthday/DSC_0084.JPG'
+            ];
+
+            // For video thumbnails, we can use some placeholder approach or keep them as is
+            // Since we don't have many video thumbnails in assets, we'll use a generic approach
+            
+            // Helper function to get random items from array using Fisher-Yates shuffle
+            function getRandomItems(array, count) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled.slice(0, count);
+            }
+
+            // Update graphic design thumbnails
+            const graphicDesignSection = document.querySelector('#graphic-design .media-grid');
+            if (graphicDesignSection) {
+                const randomGraphics = getRandomItems(graphicDesignImages, 3);
+                const graphicItems = graphicDesignSection.querySelectorAll('.media-item img');
+                graphicItems.forEach((img, index) => {
+                    if (randomGraphics[index]) {
+                        img.src = randomGraphics[index];
+                    }
+                });
+            }
+
+            // Update photography thumbnails  
+            const photographySection = document.querySelector('#photography .media-grid');
+            if (photographySection) {
+                const randomPhotos = getRandomItems(photographyImages, 3);
+                const photoItems = photographySection.querySelectorAll('.media-item img');
+                photoItems.forEach((img, index) => {
+                    if (randomPhotos[index]) {
+                        img.src = randomPhotos[index];
+                    }
+                });
+            }
+
+            // Update video editing thumbnails (keep some from photography or graphics)
+            const videoSection = document.querySelector('#video-editing .media-grid');
+            if (videoSection) {
+                const allImages = [...graphicDesignImages, ...photographyImages];
+                const randomVideos = getRandomItems(allImages, 3);
+                const videoItems = videoSection.querySelectorAll('.media-item img');
+                videoItems.forEach((img, index) => {
+                    if (randomVideos[index]) {
+                        img.src = randomVideos[index];
+                    }
+                });
+            }
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
