@@ -101,15 +101,16 @@ function showSlide(n) {
         thumb.classList.remove('active');
     });
     
-    // Calculate prev and next indices
-    let prevIndex = currentSlideIndex - 2;
-    let nextIndex = currentSlideIndex;
+    // Calculate prev and next indices (1-based to 0-based conversion)
+    let prevIndex = currentSlideIndex - 2; // Previous slide (current - 1, then - 1 for 0-based)
+    let nextIndex = currentSlideIndex; // Next slide (current + 1, then - 1 for 0-based = current)
     
+    // Wrap around for circular carousel
     if (prevIndex < 0) {
         prevIndex = slides.length + prevIndex;
     }
     if (nextIndex >= slides.length) {
-        nextIndex = nextIndex - slides.length;
+        nextIndex = 0;
     }
     
     // Show current slide

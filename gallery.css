@@ -575,10 +575,14 @@
         width: 85%;
     }
 
-    .gallery-item.prev,
+    .gallery-item.prev {
+        opacity: 0.3;
+        transform: translateX(-95%) scale(0.5);
+    }
+    
     .gallery-item.next {
         opacity: 0.3;
-        transform: translateX(0) scale(0.5);
+        transform: translateX(95%) scale(0.5);
     }
 
     .slideshow-control {
