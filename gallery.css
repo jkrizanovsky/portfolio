@@ -312,6 +312,13 @@
     margin: 0 auto;
 }
 
+.company-description.second-line {
+    font-size: 1rem;
+    color: #dc143c;
+    padding-left: 2rem;
+    line-height: 1.4;
+}
+
 /* Timeline-like Management Section */
 .management-section {
     margin-bottom: 4rem;
