@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleText.textContent = 'Portfolio';
     }
     
-    // Dropdown now uses direct page navigation (no custom JS needed)
     
     // Add smooth scroll behavior to all internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

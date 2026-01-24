@@ -12,6 +12,7 @@
     --text-secondary: #fffef5;
     --text-muted: #fffef5;
     --gold-accent: #d4af37;
+    --dropdown-min-width: 100px;
 }
 
 /* Reset & Base Styles */
@@ -89,7 +90,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     opacity: 0.6;
-    min-width: 100px;
+    min-width: var(--dropdown-min-width);
 }
 
 .dropdown-toggle:hover {
