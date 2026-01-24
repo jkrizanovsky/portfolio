@@ -129,6 +129,9 @@ function showSlide(n) {
         currentSlideIndex = slides.length;
     }
     
+    // Pause all videos before changing slides
+    pauseAllVideos();
+    
     // Remove all classes from slides
     slides.forEach(slide => {
         slide.classList.remove('active', 'prev', 'next');
@@ -170,6 +173,26 @@ function showSlide(n) {
     if (dots[currentSlideIndex - 1]) {
         dots[currentSlideIndex - 1].classList.add('active');
     }
+}
+
+// Function to pause all videos (YouTube iframes and local videos)
+function pauseAllVideos() {
+    // Pause YouTube iframes
+    const iframes = document.querySelectorAll('.video-iframe');
+    iframes.forEach(iframe => {
+        // Send postMessage to pause the video
+        if (iframe.src.includes('youtube.com')) {
+            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+    });
+    
+    // Pause local HTML5 videos
+    const videos = document.querySelectorAll('.local-video');
+    videos.forEach(video => {
+        if (!video.paused) {
+            video.pause();
+        }
+    });
 }
 
 // Auto-advance slideshow (optional - commented out by default)

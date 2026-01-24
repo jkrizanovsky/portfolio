@@ -49,39 +49,34 @@
         <!-- Modern Gallery/Slideshow -->
         <div class="slideshow-container">
             <div class="slideshow-gallery">
-                <!-- Gallery Items - Videos with links -->
-                <div class="gallery-item video-slide active">
-                    <a href="https://youtu.be/7Lp-HEOm3lY" target="_blank" class="video-link-full">
-                        <img src="assets/video-editing/thumbnails/video1-thumb.jpg" alt="Video Editing Work 1" onerror="this.style.background='linear-gradient(135deg, #1b3d2d 0%, #2c5e4a 100%)'">
-                        <div class="play-icon-large">▶</div>
-                    </a>
+                <!-- Gallery Items - Embedded Videos -->
+                <div class="gallery-item video-slide active" data-video-type="youtube" data-video-id="7Lp-HEOm3lY">
+                    <div class="video-embed-container">
+                        <iframe class="video-iframe" src="https://www.youtube.com/embed/7Lp-HEOm3lY?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
-                <div class="gallery-item video-slide">
-                    <a href="https://youtu.be/h5JarfdXfyY?si=vaYzKasJuugMOXux" target="_blank" class="video-link-full">
-                        <img src="assets/video-editing/thumbnails/video2-thumb.jpg" alt="Video Editing Work 2" onerror="this.style.background='linear-gradient(135deg, #2c5e4a 0%, #3d7e6b 100%)'">
-                        <div class="play-icon-large">▶</div>
-                    </a>
+                <div class="gallery-item video-slide" data-video-type="youtube" data-video-id="h5JarfdXfyY">
+                    <div class="video-embed-container">
+                        <iframe class="video-iframe" src="https://www.youtube.com/embed/h5JarfdXfyY?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
-                <div class="gallery-item video-slide">
-                    <a href="https://youtu.be/cO23Zcphw2E?si=ibeRb53z_eA2Yt7p" target="_blank" class="video-link-full">
-                        <img src="assets/video-editing/thumbnails/video3-thumb.jpg" alt="Video Editing Work 3" onerror="this.style.background='linear-gradient(135deg, #3d7e6b 0%, #4d9e8b 100%)'">
-                        <div class="play-icon-large">▶</div>
-                    </a>
+                <div class="gallery-item video-slide" data-video-type="youtube" data-video-id="cO23Zcphw2E">
+                    <div class="video-embed-container">
+                        <iframe class="video-iframe" src="https://www.youtube.com/embed/cO23Zcphw2E?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
-                <div class="gallery-item video-slide">
-                    <a href="https://youtube.com/shorts/RQvzwDIXyCo?si=6QBqpGtmMLT7ExRN" target="_blank" class="video-link-full">
-                        <img src="assets/video-editing/thumbnails/video4-thumb.jpg" alt="Video Editing Work 4" onerror="this.style.background='linear-gradient(135deg, #1b3d2d 0%, #3d7e6b 100%)'">
-                        <div class="play-icon-large">▶</div>
-                    </a>
+                <div class="gallery-item video-slide" data-video-type="youtube" data-video-id="RQvzwDIXyCo">
+                    <div class="video-embed-container">
+                        <iframe class="video-iframe" src="https://www.youtube.com/embed/RQvzwDIXyCo?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
-                <div class="gallery-item video-slide">
-                    <a href="https://www.instagram.com/reel/C4X7tE_CG7Q/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="video-link-full">
-                        <img src="assets/video-editing/thumbnails/video5-thumb.jpg" alt="Video Editing Work 5" onerror="this.style.background='linear-gradient(135deg, #2c5e4a 0%, #4d9e8b 100%)'">
-                        <div class="play-icon-large">▶</div>
-                    </a>
+                <div class="gallery-item video-slide" data-video-type="instagram" data-video-id="C4X7tE_CG7Q">
+                    <div class="video-embed-container">
+                        <iframe class="video-iframe" src="https://www.instagram.com/reel/C4X7tE_CG7Q/embed" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
                 </div>
-                <div class="gallery-item video-slide">
-                    <video controls class="local-video" poster="assets/video-editing/thumbnails/PLeaks3-thumb.jpg" aria-label="Premier League promotional video">
+                <div class="gallery-item video-slide" data-video-type="local">
+                    <video controls class="local-video" poster="assets/video-editing/thumbnails/PLeaks3-thumb.png" aria-label="Premier League promotional video">
                         <source src="assets/video-editing/PLeaks3.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
