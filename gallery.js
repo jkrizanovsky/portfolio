@@ -1,33 +1,36 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
-// Media descriptions for each slide
-const mediaDescriptions = {
+// Media descriptions - can be overridden per page
+const defaultMediaDescriptions = {
     1: {
-        headline: "Portrait Photography",
-        description: "Professional portrait photography capturing authentic moments and emotions. High-quality images for personal and commercial use."
+        headline: "Portfolio Item 1",
+        description: "Professional creative work showcasing expertise and attention to detail."
     },
     2: {
-        headline: "Landscape Photography",
-        description: "Breathtaking landscape photography showcasing natural beauty and scenic vistas from around the world."
+        headline: "Portfolio Item 2",
+        description: "High-quality creative solutions for various projects and clients."
     },
     3: {
-        headline: "Commercial Photography",
-        description: "Professional commercial photography for businesses, products, and corporate events with studio-quality results."
+        headline: "Portfolio Item 3",
+        description: "Innovative approach to design and content creation."
     },
     4: {
-        headline: "Event Photography",
-        description: "Dynamic event photography capturing memorable moments from weddings, parties, and corporate gatherings."
+        headline: "Portfolio Item 4",
+        description: "Comprehensive creative services tailored to client needs."
     },
     5: {
-        headline: "Product Photography",
-        description: "High-quality product photography for e-commerce, catalogs, and marketing materials with attention to detail."
+        headline: "Portfolio Item 5",
+        description: "Professional results delivered with creativity and precision."
     },
     6: {
-        headline: "Street Photography",
-        description: "Authentic street photography documenting urban life, culture, and candid moments in public spaces."
+        headline: "Portfolio Item 6",
+        description: "Exceptional quality and creative excellence in every project."
     }
 };
+
+// Try to get page-specific descriptions, fall back to defaults
+let mediaDescriptions = window.pageMediaDescriptions || defaultMediaDescriptions;
 
 // Update media description
 function updateMediaDescription(slideNumber) {
