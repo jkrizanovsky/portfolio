@@ -1,6 +1,45 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
+// Media descriptions for each slide
+const mediaDescriptions = {
+    1: {
+        headline: "Portrait Photography",
+        description: "Professional portrait photography capturing authentic moments and emotions. High-quality images for personal and commercial use."
+    },
+    2: {
+        headline: "Landscape Photography",
+        description: "Breathtaking landscape photography showcasing natural beauty and scenic vistas from around the world."
+    },
+    3: {
+        headline: "Commercial Photography",
+        description: "Professional commercial photography for businesses, products, and corporate events with studio-quality results."
+    },
+    4: {
+        headline: "Event Photography",
+        description: "Dynamic event photography capturing memorable moments from weddings, parties, and corporate gatherings."
+    },
+    5: {
+        headline: "Product Photography",
+        description: "High-quality product photography for e-commerce, catalogs, and marketing materials with attention to detail."
+    },
+    6: {
+        headline: "Street Photography",
+        description: "Authentic street photography documenting urban life, culture, and candid moments in public spaces."
+    }
+};
+
+// Update media description
+function updateMediaDescription(slideNumber) {
+    const headlineElement = document.getElementById('mediaHeadline');
+    const descriptionElement = document.getElementById('mediaDescription');
+    
+    if (headlineElement && descriptionElement && mediaDescriptions[slideNumber]) {
+        headlineElement.textContent = mediaDescriptions[slideNumber].headline;
+        descriptionElement.textContent = mediaDescriptions[slideNumber].description;
+    }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     // Show the first slide
@@ -52,12 +91,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function changeSlide(n) {
     showSlide(currentSlideIndex += n);
     updateSlideCounter();
+    updateMediaDescription(currentSlideIndex);
 }
 
 // Show specific slide
 function currentSlide(n) {
     showSlide(currentSlideIndex = n);
     updateSlideCounter();
+    updateMediaDescription(currentSlideIndex);
 }
 
 // Update slide counter display
@@ -74,7 +115,6 @@ function updateSlideCounter() {
 function showSlide(n) {
     const slides = document.querySelectorAll('.gallery-item');
     const dots = document.querySelectorAll('.dot');
-    const thumbnails = document.querySelectorAll('.thumbnail');
     
     if (slides.length === 0) return;
     
@@ -94,11 +134,6 @@ function showSlide(n) {
     // Remove active class from dots
     dots.forEach(dot => {
         dot.classList.remove('active');
-    });
-    
-    // Remove active class from thumbnails
-    thumbnails.forEach(thumb => {
-        thumb.classList.remove('active');
     });
     
     // Calculate prev and next indices (1-based to 0-based conversion)
@@ -131,11 +166,6 @@ function showSlide(n) {
     // Activate current dot
     if (dots[currentSlideIndex - 1]) {
         dots[currentSlideIndex - 1].classList.add('active');
-    }
-    
-    // Activate current thumbnail
-    if (thumbnails[currentSlideIndex - 1]) {
-        thumbnails[currentSlideIndex - 1].classList.add('active');
     }
 }
 

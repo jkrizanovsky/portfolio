@@ -10,6 +10,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let isGalleryView = true;
     let hasScrolledToTiles = false;
     
+    // Dropdown functionality with delay
+    const sectionsDropdown = document.querySelector('.sections-dropdown');
+    let dropdownTimeout;
+    
+    if (sectionsDropdown) {
+        sectionsDropdown.addEventListener('mouseenter', function() {
+            clearTimeout(dropdownTimeout);
+            this.classList.add('show-menu');
+        });
+        
+        sectionsDropdown.addEventListener('mouseleave', function() {
+            const dropdown = this;
+            dropdownTimeout = setTimeout(function() {
+                dropdown.classList.remove('show-menu');
+            }, 500); // 500ms delay before hiding
+        });
+    }
+    
     // Function to show/hide gallery tiles on scroll
     function handleScroll() {
         if (!isGalleryView) return;
@@ -45,6 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // On main page, toggle between views
             isGalleryView = !isGalleryView;
             
+            // Add toggle animation class
+            toggleBtn.classList.add('toggled');
+            
             if (isGalleryView) {
                 // Switch to Gallery View
                 galleryView.classList.add('active');
@@ -54,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (galleryGrid) {
                     galleryGrid.classList.remove('visible');
                 }
+                toggleBtn.classList.remove('toggled');
             } else {
                 // Switch to CV View
                 galleryView.classList.remove('active');
@@ -87,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
         galleryView.classList.remove('active');
         cvView.classList.add('active');
         toggleText.textContent = 'Portfolio';
+        toggleBtn.classList.add('toggled');
     }
     
     
