@@ -181,8 +181,13 @@ function pauseAllVideos() {
     const iframes = document.querySelectorAll('.video-iframe');
     iframes.forEach(iframe => {
         // Send postMessage to pause the video
-        if (iframe.src.includes('youtube.com')) {
-            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        try {
+            const url = new URL(iframe.src);
+            if (url.hostname === 'www.youtube.com' || url.hostname === 'youtube.com') {
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            }
+        } catch (e) {
+            // Invalid URL, skip
         }
     });
     
