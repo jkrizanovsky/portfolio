@@ -10,18 +10,25 @@ document.addEventListener('DOMContentLoaded', function() {
     let isGalleryView = true;
     let hasScrolledToTiles = false;
     
-    // Function to show gallery tiles on scroll
+    // Function to show/hide gallery tiles on scroll
     function handleScroll() {
-        if (!isGalleryView || hasScrolledToTiles) return;
+        if (!isGalleryView) return;
         
         const heroHeight = heroSection ? heroSection.offsetHeight : 0;
         const scrollPosition = window.scrollY;
         
         // Show tiles when user scrolls past 40% of hero section
         if (scrollPosition > heroHeight * 0.4) {
-            if (galleryGrid) {
+            if (galleryGrid && !hasScrolledToTiles) {
                 galleryGrid.classList.add('visible');
                 hasScrolledToTiles = true;
+            }
+        } 
+        // Hide tiles when user scrolls back up above 40% of hero section
+        else if (scrollPosition <= heroHeight * 0.4) {
+            if (galleryGrid && hasScrolledToTiles) {
+                galleryGrid.classList.remove('visible');
+                hasScrolledToTiles = false;
             }
         }
     }
@@ -82,40 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleText.textContent = 'Portfolio';
     }
     
-    // Dropdown menu functionality
+    // Dropdown menu functionality - no longer needed for scrolling since we navigate to pages
     const dropdownToggle = document.querySelector('.dropdown-toggle');
     const dropdownMenu = document.querySelector('.dropdown-menu');
     const dropdownItems = document.querySelectorAll('.dropdown-item');
-    
-    // Handle dropdown item clicks to scroll to section
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            
-            // Make sure we're in gallery view
-            if (!isGalleryView && galleryView && cvView) {
-                isGalleryView = true;
-                galleryView.classList.add('active');
-                cvView.classList.remove('active');
-                toggleText.textContent = 'CV';
-            }
-            
-            // Show gallery grid if not visible
-            if (galleryGrid && !hasScrolledToTiles) {
-                galleryGrid.classList.add('visible');
-                hasScrolledToTiles = true;
-            }
-            
-            // Scroll to the section
-            setTimeout(() => {
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 100);
-        });
-    });
     
     // Add smooth scroll behavior to all internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

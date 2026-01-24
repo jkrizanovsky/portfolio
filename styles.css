@@ -89,6 +89,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     opacity: 0.6;
+    min-width: 100px;
 }
 
 .dropdown-toggle:hover {
@@ -100,7 +101,7 @@ body {
 .dropdown-menu {
     position: absolute;
     top: calc(100% + 0.5rem);
-    left: 0;
+    right: 0;
     background: rgba(13, 8, 16, 0.95);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 254, 245, 0.2);
@@ -186,10 +187,10 @@ body {
 /* Hero Section */
 .hero {
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 0 2rem;
     max-width: 800px;
     margin: 0 auto;
-    min-height: 60vh;
+    min-height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
     justify-content: center;
