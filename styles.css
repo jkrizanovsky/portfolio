@@ -45,6 +45,40 @@ body {
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
 }
 
+/* Back Button */
+.back-button {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(13, 8, 16, 0.7);
+    border: 1px solid rgba(255, 254, 245, 0.2);
+    border-radius: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+    opacity: 1;
+    background: rgba(13, 8, 16, 0.9);
+    border-color: var(--text-primary);
+    transform: translateX(-3px);
+}
+
+.back-button::before {
+    content: "←";
+    font-size: 1.2rem;
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -96,7 +130,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, var(--plum-medium), var(--plum-light));
+    background: rgba(13, 8, 16, 0.95);
     border: 1px solid var(--text-primary);
     border-radius: 50px;
     color: var(--text-primary);
@@ -107,12 +141,13 @@ body {
     box-shadow: none;
     min-width: var(--dropdown-toggle-min-width);
     height: 40px;
+    backdrop-filter: blur(20px);
 }
 
 .dropdown-toggle:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
-    background: linear-gradient(135deg, var(--plum-light), var(--plum-accent));
+    background: rgba(45, 27, 61, 0.6);
 }
 
 .dropdown-menu {
@@ -148,7 +183,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, var(--plum-medium), var(--plum-light));
+    background: rgba(13, 8, 16, 0.95);
     border: 1px solid var(--text-primary);
     border-radius: 50px;
     color: var(--text-primary);
@@ -158,12 +193,13 @@ body {
     transition: all 0.3s ease;
     box-shadow: none;
     height: 40px;
+    backdrop-filter: blur(20px);
 }
 
 .toggle-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
-    background: linear-gradient(135deg, var(--plum-light), var(--plum-accent));
+    background: rgba(45, 27, 61, 0.6);
 }
 
 .toggle-icon {
@@ -705,4 +741,44 @@ body {
     color: var(--text-muted);
     opacity: 0.7;
     margin-top: 1rem;
+}
+
+/* Subtle Bubble Animation Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(107, 61, 126, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 77, 158, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(74, 44, 94, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 60% 70%, rgba(45, 27, 61, 0.15) 0%, transparent 50%);
+    background-size: 200% 200%, 250% 250%, 300% 300%, 280% 280%;
+    background-position: 0% 0%, 100% 100%, 50% 50%, 80% 20%;
+    animation: bubbleFlow 20s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes bubbleFlow {
+    0%, 100% {
+        background-position: 0% 0%, 100% 100%, 50% 50%, 80% 20%;
+        opacity: 0.6;
+    }
+    25% {
+        background-position: 100% 50%, 0% 50%, 25% 75%, 20% 80%;
+        opacity: 0.7;
+    }
+    50% {
+        background-position: 50% 100%, 50% 0%, 75% 25%, 60% 40%;
+        opacity: 0.5;
+    }
+    75% {
+        background-position: 0% 50%, 100% 50%, 50% 50%, 40% 60%;
+        opacity: 0.7;
+    }
 }
