@@ -4,35 +4,129 @@ document.addEventListener('DOMContentLoaded', function() {
     const toggleText = document.getElementById('toggleText');
     const galleryView = document.getElementById('galleryView');
     const cvView = document.getElementById('cvView');
+    const galleryGrid = document.getElementById('galleryGrid');
+    const heroSection = document.getElementById('heroSection');
     
     let isGalleryView = true;
+    let hasScrolledToTiles = false;
     
-    toggleBtn.addEventListener('click', function() {
-        isGalleryView = !isGalleryView;
+    // Function to show gallery tiles on scroll
+    function handleScroll() {
+        if (!isGalleryView || hasScrolledToTiles) return;
         
-        if (isGalleryView) {
-            // Switch to Gallery View
-            galleryView.classList.add('active');
-            cvView.classList.remove('active');
-            toggleText.textContent = 'CV';
-        } else {
-            // Switch to CV View
-            galleryView.classList.remove('active');
-            cvView.classList.add('active');
-            toggleText.textContent = 'Portfolio';
+        const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+        const scrollPosition = window.scrollY;
+        
+        // Show tiles when user scrolls past 40% of hero section
+        if (scrollPosition > heroHeight * 0.4) {
+            if (galleryGrid) {
+                galleryGrid.classList.add('visible');
+                hasScrolledToTiles = true;
+            }
         }
+    }
+    
+    // Attach scroll listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Toggle button functionality - works from any page
+    toggleBtn.addEventListener('click', function() {
+        const currentPath = window.location.pathname;
+        const isOnMainPage = currentPath.endsWith('index.html') || currentPath.endsWith('/');
         
-        // Smooth scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (isOnMainPage) {
+            // On main page, toggle between views
+            isGalleryView = !isGalleryView;
+            
+            if (isGalleryView) {
+                // Switch to Gallery View
+                galleryView.classList.add('active');
+                cvView.classList.remove('active');
+                toggleText.textContent = 'CV';
+                hasScrolledToTiles = false;
+                if (galleryGrid) {
+                    galleryGrid.classList.remove('visible');
+                }
+            } else {
+                // Switch to CV View
+                galleryView.classList.remove('active');
+                cvView.classList.add('active');
+                toggleText.textContent = 'Portfolio';
+            }
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            // On other pages
+            const currentToggleText = toggleText.textContent;
+            
+            if (currentToggleText === 'CV') {
+                // Navigate to CV view on main page
+                window.location.href = 'index.html?view=cv';
+            } else {
+                // Navigate back to Portfolio (main page)
+                window.location.href = 'index.html';
+            }
+        }
+    });
+    
+    // Check if URL has view parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const viewParam = urlParams.get('view');
+    
+    if (viewParam === 'cv' && galleryView && cvView) {
+        // Switch to CV view if URL parameter is set
+        isGalleryView = false;
+        galleryView.classList.remove('active');
+        cvView.classList.add('active');
+        toggleText.textContent = 'Portfolio';
+    }
+    
+    // Dropdown menu functionality
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    
+    // Handle dropdown item clicks to scroll to section
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            
+            // Make sure we're in gallery view
+            if (!isGalleryView && galleryView && cvView) {
+                isGalleryView = true;
+                galleryView.classList.add('active');
+                cvView.classList.remove('active');
+                toggleText.textContent = 'CV';
+            }
+            
+            // Show gallery grid if not visible
+            if (galleryGrid && !hasScrolledToTiles) {
+                galleryGrid.classList.add('visible');
+                hasScrolledToTiles = true;
+            }
+            
+            // Scroll to the section
+            setTimeout(() => {
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        });
     });
     
     // Add smooth scroll behavior to all internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
         });
     });
@@ -52,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
     
-    // Observe gallery sections
+    // Observe gallery sections (but don't apply initial transform since we're using grid visibility)
     document.querySelectorAll('.gallery-section').forEach(section => {
         section.style.opacity = '0';
         section.style.transform = 'translateY(30px)';
@@ -84,13 +178,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Add parallax effect to hero section
-    const hero = document.querySelector('.hero');
-    if (hero) {
+    // Add parallax effect to hero section (only when in gallery view)
+    if (heroSection) {
         window.addEventListener('scroll', function() {
+            if (!isGalleryView) return;
             const scrolled = window.pageYOffset;
-            hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-            hero.style.opacity = 1 - (scrolled / 500);
+            heroSection.style.transform = `translateY(${scrolled * 0.3}px)`;
+            heroSection.style.opacity = 1 - (scrolled / 500);
         });
     }
     

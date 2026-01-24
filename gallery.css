@@ -7,13 +7,13 @@
 
 .page-hero {
     text-align: center;
-    padding: 3rem 2rem 2rem;
-    max-width: 1000px;
+    padding: 2.5rem 2rem 1.5rem;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .page-title {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
     font-weight: 900;
     margin-bottom: 0.5rem;
     background: var(--text-primary);
@@ -25,7 +25,7 @@
 }
 
 .page-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     font-weight: 300;
     letter-spacing: 0.5px;
@@ -34,8 +34,8 @@
 /* Slideshow Container */
 .slideshow-container {
     position: relative;
-    max-width: 1200px;
-    margin: 3rem auto;
+    max-width: 1000px;
+    margin: 2.5rem auto;
     padding: 0 2rem;
 }
 
@@ -43,11 +43,11 @@
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
     background: var(--plum-dark);
-    border: 2px solid var(--plum-accent);
-    box-shadow: 0 10px 50px rgba(107, 61, 126, 0.4);
+    border: 2px solid var(--text-primary);
+    box-shadow: 0 8px 35px rgba(255, 255, 255, 0.25);
 }
 
 /* Gallery Items */
@@ -76,8 +76,8 @@
     right: 0;
     background: linear-gradient(to top, rgba(13, 8, 16, 0.95), transparent);
     color: var(--text-primary);
-    padding: 2rem;
-    font-size: 1.5rem;
+    padding: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     text-align: center;
 }
@@ -102,6 +102,7 @@
 .slideshow-control:hover {
     background: var(--plum-accent);
     transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
 }
 
 .slideshow-control.prev {
@@ -164,12 +165,12 @@
 .thumbnail:hover {
     border-color: var(--plum-accent);
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(107, 61, 126, 0.5);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
 
 .thumbnail.active {
     border-color: var(--text-primary);
-    box-shadow: 0 5px 20px rgba(255, 254, 245, 0.4);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
 }
 
 .thumbnail img {
@@ -290,7 +291,7 @@
     background: rgba(74, 44, 94, 0.3);
     border-color: var(--text-primary);
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(107, 61, 126, 0.4);
+    box-shadow: 0 12px 35px rgba(255, 255, 255, 0.25);
 }
 
 .card-icon {
@@ -411,7 +412,7 @@
 .showcase-item:hover {
     border-color: var(--text-primary);
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(255, 254, 245, 0.3);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
 
 .showcase-item img {

@@ -37,23 +37,23 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(13, 8, 16, 0.85);
+    background: rgba(13, 8, 16, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--plum-accent);
-    box-shadow: 0 4px 30px rgba(107, 61, 126, 0.6);
+    border-bottom: 1px solid rgba(45, 27, 61, 0.5);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
 }
 
 .nav-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 1.2rem 2rem;
+    padding: 0.8rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .logo {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: 800;
     background: var(--text-primary);
     -webkit-background-clip: text;
@@ -73,25 +73,81 @@ body {
     opacity: 0.8;
 }
 
+/* Sections Dropdown */
+.sections-dropdown {
+    position: relative;
+}
+
+.dropdown-toggle {
+    padding: 0.6rem 1rem;
+    background: rgba(45, 27, 61, 0.3);
+    border: 1px solid rgba(255, 254, 245, 0.15);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.dropdown-toggle:hover {
+    opacity: 1;
+    background: rgba(45, 27, 61, 0.5);
+    border-color: rgba(255, 254, 245, 0.3);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    background: rgba(13, 8, 16, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 254, 245, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    min-width: 180px;
+    display: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sections-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 1.2rem;
+}
+
 .toggle-btn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
+    padding: 0.6rem 1.2rem;
     background: linear-gradient(135deg, var(--plum-medium), var(--plum-light));
     border: 1px solid var(--text-primary);
     border-radius: 50px;
     color: var(--text-primary);
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 254, 245, 0.3);
+    box-shadow: none;
 }
 
 .toggle-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(255, 254, 245, 0.5);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
     background: linear-gradient(135deg, var(--plum-light), var(--plum-accent));
 }
 
@@ -130,13 +186,18 @@ body {
 /* Hero Section */
 .hero {
     text-align: center;
-    padding: 4rem 2rem;
-    max-width: 1000px;
+    padding: 3rem 2rem;
+    max-width: 800px;
     margin: 0 auto;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 900;
     margin-bottom: 1rem;
     background: var(--text-primary);
@@ -148,7 +209,7 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--text-secondary);
     font-weight: 300;
     letter-spacing: 0.5px;
@@ -158,16 +219,24 @@ body {
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1600px;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 1200px;
     margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.gallery-grid.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Gallery Section */
 .gallery-section {
     position: relative;
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
     aspect-ratio: 1;
     background: linear-gradient(135deg, var(--plum-dark), var(--plum-medium));
@@ -177,9 +246,9 @@ body {
 }
 
 .gallery-section:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px) scale(1.02);
     border-color: var(--text-primary);
-    box-shadow: 0 20px 60px rgba(255, 254, 245, 0.4);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
 }
 
 .gallery-section:hover .section-overlay {
@@ -204,7 +273,7 @@ body {
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
     background: var(--text-primary);
@@ -216,7 +285,7 @@ body {
 }
 
 .section-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     font-weight: 300;
 }
@@ -288,20 +357,20 @@ body {
 
 /* CV Timeline View */
 .cv-container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 3rem 2rem;
+    padding: 2.5rem 2rem;
 }
 
 .cv-header {
     text-align: center;
-    padding: 3rem 0;
+    padding: 2.5rem 0;
     border-bottom: 2px solid var(--text-primary);
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .cv-name {
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 900;
     margin-bottom: 0.5rem;
     background: var(--text-primary);
@@ -311,7 +380,7 @@ body {
 }
 
 .cv-title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
     font-weight: 300;
@@ -336,7 +405,7 @@ body {
 }
 
 .timeline-heading {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     margin-bottom: 2rem;
     color: var(--text-primary);
@@ -346,10 +415,10 @@ body {
 
 .timeline-item {
     display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-    padding: 2rem;
+    grid-template-columns: 180px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
     background: rgba(74, 44, 94, 0.2);
     border-left: 3px solid var(--text-primary);
     border-radius: 10px;
@@ -359,7 +428,7 @@ body {
 .timeline-item:hover {
     background: rgba(74, 44, 94, 0.3);
     transform: translateX(10px);
-    box-shadow: 0 10px 30px rgba(255, 254, 245, 0.3);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
 .timeline-date {
@@ -370,14 +439,14 @@ body {
 }
 
 .timeline-content h4 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
     color: var(--text-primary);
 }
 
 .timeline-company {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     margin-bottom: 1rem;
     font-style: italic;
@@ -570,4 +639,56 @@ body {
         var(--plum-dark) 100%
     );
     background-size: 1000px 100%;
+}
+
+/* Footer */
+.footer {
+    background: rgba(13, 8, 16, 0.95);
+    border-top: 1px solid rgba(255, 254, 245, 0.2);
+    padding: 2rem 1.5rem;
+    margin-top: 3rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(74, 44, 94, 0.3);
+    border: 1px solid rgba(255, 254, 245, 0.2);
+    border-radius: 50%;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--text-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+    margin-top: 1rem;
 }
