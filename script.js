@@ -89,10 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleText.textContent = 'Portfolio';
     }
     
-    // Dropdown menu functionality - no longer needed for scrolling since we navigate to pages
-    const dropdownToggle = document.querySelector('.dropdown-toggle');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    // Dropdown now uses direct page navigation (no custom JS needed)
     
     // Add smooth scroll behavior to all internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
