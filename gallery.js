@@ -47,6 +47,9 @@ function updateMediaDescription(slideNumber) {
 document.addEventListener('DOMContentLoaded', function() {
     // Show the first slide
     if (document.querySelector('.slideshow-gallery')) {
+        // Detect horizontal images and apply class
+        detectHorizontalImages();
+        
         showSlide(currentSlideIndex);
         updateSlideCounter();
         
@@ -103,6 +106,35 @@ document.addEventListener('DOMContentLoaded', function() {
     // Window resize is handled by CSS with fixed layout
     // No JavaScript resizing needed
 });
+
+// Detect horizontal (landscape) images and apply horizontal-image class
+function detectHorizontalImages() {
+    const galleryItems = document.querySelectorAll('.gallery-item:not(.video-slide):not(.rotated-image)');
+    
+    galleryItems.forEach(item => {
+        const img = item.querySelector('img');
+        if (img) {
+            // Check if image is already loaded
+            if (img.complete && img.naturalWidth > 0) {
+                applyOrientationClass(item, img);
+            } else {
+                // Wait for image to load
+                img.onload = function() {
+                    applyOrientationClass(item, img);
+                };
+            }
+        }
+    });
+}
+
+// Apply horizontal-image class if image is landscape orientation
+function applyOrientationClass(item, img) {
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    // If width > height (landscape), add horizontal-image class
+    if (aspectRatio > 1.2) {
+        item.classList.add('horizontal-image');
+    }
+}
 
 // Change slide by n (next/previous)
 function changeSlide(n) {
