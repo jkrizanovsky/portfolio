@@ -55,8 +55,9 @@
 /* Gallery Items - Carousel Layout */
 .gallery-item {
     position: absolute;
-    /* Fixed dimensions based on vertical/portrait reference */
-    width: 340px;
+    /* Default dimensions - will be overridden by container size classes */
+    /* Width uses container height as reference for all calculations */
+    width: calc(100% * 9 / 16); /* Default to 9:16 vertical ratio */
     height: 100%;
     max-height: 100%;
     border-radius: 15px;
@@ -127,36 +128,70 @@
     display: block;
 }
 
-/* Horizontal/Landscape images - scale to match height of vertical container */
-.gallery-item.horizontal-image {
-    /* Wider container for horizontal images, but same height as vertical */
-    width: auto;
-    max-width: 90vw;
+/* Container Size Classes - 3 sizes based on aspect ratio */
+/* All containers use the gallery height as the longest edge */
+/* The --gallery-height CSS variable is set by JavaScript for horizontal containers */
+
+/* 9:16 Vertical/Portrait container (default for vertical images) */
+/* Longest edge (height) = 100% of container, width = height × 9/16 */
+.gallery-item.container-vertical {
+    width: calc(100% * 9 / 16);
     height: 100%;
 }
 
-.gallery-item.horizontal-image img {
-    height: 100%;
+.gallery-item.container-vertical img {
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
-    max-width: none;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 16:9 Horizontal/Landscape container */
+/* Longest edge (width) = gallery height in pixels, height = width × 9/16 */
+/* Width is set via --gallery-height CSS variable from JavaScript */
+.gallery-item.container-horizontal {
+    width: var(--gallery-height, 60vh);
+    height: calc(var(--gallery-height, 60vh) * 9 / 16);
+}
+
+.gallery-item.container-horizontal img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 1:1 Square container */
+/* Both edges = gallery height in pixels */
+/* Dimension is set via --gallery-height CSS variable from JavaScript */
+.gallery-item.container-square {
+    width: var(--gallery-height, 60vh);
+    height: var(--gallery-height, 60vh);
+}
+
+.gallery-item.container-square img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
 }
 
 /* Rotate specific photos in photography slideshow */
+/* Rotated images use the same container system but with rotation transform */
 .gallery-item.rotated-image {
-    /* Container uses same fixed dimensions as other items */
-    width: 340px;
+    /* Container uses same dimensions as container-vertical */
+    width: calc(100% * 9 / 16);
     height: 100%;
 }
 
 .gallery-item.rotated-image img {
     transform: rotate(-90deg);
     /* When rotated -90deg, the image's height becomes its visual width and vice versa */
-    /* Set height to container width so after rotation it fills the container width */
-    height: 340px;
-    width: auto;
-    max-width: none;
-    max-height: none;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 
@@ -307,20 +342,30 @@
     background: #000;
 }
 
-/* Horizontal video slides - scale to match height of vertical container
+/* Horizontal video slides - use 16:9 container 
    Note: Uses 16:9 aspect ratio which is standard for most YouTube and modern video content.
    Vertical videos should use the .vertical-video class for proper portrait display. */
 .gallery-item.video-slide:not(.vertical-video) {
-    /* Wider container for horizontal videos, but same height as vertical */
-    width: auto;
-    min-width: 340px;
-    max-width: calc(100% - 4rem);
-    height: 100%;
-    aspect-ratio: 16/9;
+    /* 16:9 horizontal: width = gallery height, height = width × 9/16 */
+    width: var(--gallery-height, 60vh);
+    height: calc(var(--gallery-height, 60vh) * 9 / 16);
 }
 
 .gallery-item.video-slide:not(.vertical-video) .video-embed-container,
 .gallery-item.video-slide:not(.vertical-video) .video-iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* Vertical video slides - use 9:16 container */
+.gallery-item.video-slide.vertical-video {
+    /* 9:16 vertical: height = container height, width = height × 9/16 */
+    width: calc(100% * 9 / 16);
+    height: 100%;
+}
+
+.gallery-item.video-slide.vertical-video .video-embed-container,
+.gallery-item.video-slide.vertical-video .video-iframe {
     width: 100%;
     height: 100%;
 }
@@ -608,26 +653,8 @@
         max-height: 500px;
     }
 
-    .gallery-item {
-        width: 280px;
-    }
-
-    .gallery-item.rotated-image {
-        width: 280px;
-    }
-
-    .gallery-item.rotated-image img {
-        height: 280px;
-    }
-
-    /* Horizontal images/videos responsive */
-    .gallery-item.horizontal-image {
-        max-width: 85vw;
-    }
-
-    .gallery-item.video-slide:not(.vertical-video) {
-        max-width: calc(100% - 3rem);
-    }
+    /* Container sizes automatically scale with gallery height */
+    /* No need to override widths as they use calc() with percentages */
 
     .gallery-item.prev {
         transform: translate(calc(-50% - 90%), -50%) scale(0.6);
@@ -699,26 +726,8 @@
         max-height: 400px;
     }
 
-    .gallery-item {
-        width: 220px;
-    }
-
-    .gallery-item.rotated-image {
-        width: 220px;
-    }
-
-    .gallery-item.rotated-image img {
-        height: 220px;
-    }
-
-    /* Horizontal images/videos responsive */
-    .gallery-item.horizontal-image {
-        max-width: 95vw;
-    }
-
-    .gallery-item.video-slide:not(.vertical-video) {
-        max-width: calc(100% - 2rem);
-    }
+    /* Container sizes automatically scale with gallery height */
+    /* No need to override widths as they use calc() with percentages */
 
     .gallery-item.prev {
         opacity: 0.3;

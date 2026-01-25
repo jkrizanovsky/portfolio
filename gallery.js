@@ -47,6 +47,9 @@ function updateMediaDescription(slideNumber) {
 document.addEventListener('DOMContentLoaded', function() {
     // Show the first slide
     if (document.querySelector('.slideshow-gallery')) {
+        // Set gallery height CSS variable for container sizing
+        updateGalleryHeightVariable();
+        
         // Detect horizontal images and apply class
         detectHorizontalImages();
         
@@ -62,6 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     currentSlide(index + 1);
                 }
             });
+        });
+        
+        // Update gallery height variable on window resize
+        window.addEventListener('resize', function() {
+            updateGalleryHeightVariable();
         });
     }
     
@@ -102,14 +110,25 @@ document.addEventListener('DOMContentLoaded', function() {
             changeSlide(-1);
         }
     }
-    
-    // Window resize is handled by CSS with fixed layout
-    // No JavaScript resizing needed
 });
 
-// Detect horizontal (landscape) images and apply horizontal-image class
+// Update the --gallery-height CSS variable based on actual gallery height
+// This is used for horizontal and square containers where width = gallery height
+function updateGalleryHeightVariable() {
+    const gallery = document.querySelector('.slideshow-gallery');
+    if (gallery) {
+        const galleryHeight = gallery.offsetHeight;
+        document.documentElement.style.setProperty('--gallery-height', galleryHeight + 'px');
+    }
+}
+
+// Detect horizontal (landscape) images and apply container size classes
 // Note: Video slides are excluded as they have their own CSS handling via .video-slide class
 // Rotated images are excluded as they have special rotation transforms applied
+// Container types:
+// - container-vertical: 9:16 ratio (portrait) - for images with aspect ratio <= 0.75
+// - container-square: 1:1 ratio - for images with aspect ratio between 0.75 and 1.33
+// - container-horizontal: 16:9 ratio (landscape) - for images with aspect ratio > 1.33
 function detectHorizontalImages() {
     const galleryItems = document.querySelectorAll('.gallery-item:not(.video-slide):not(.rotated-image)');
     
@@ -118,24 +137,44 @@ function detectHorizontalImages() {
         if (img) {
             // Check if image is already loaded
             if (img.complete && img.naturalWidth > 0) {
-                applyOrientationClass(item, img);
+                applyContainerClass(item, img);
             } else {
                 // Wait for image to load
                 img.onload = function() {
-                    applyOrientationClass(item, img);
+                    applyContainerClass(item, img);
                 };
             }
         }
     });
 }
 
-// Apply horizontal-image class if image is landscape orientation
-function applyOrientationClass(item, img) {
+// Apply container size class based on image aspect ratio
+// Three container sizes:
+// - 9:16 (vertical/portrait) - aspect ratio 0.5625
+// - 1:1 (square) - aspect ratio 1.0
+// - 16:9 (horizontal/landscape) - aspect ratio 1.778
+// We choose the closest container to the actual image dimensions
+function applyContainerClass(item, img) {
     const aspectRatio = img.naturalWidth / img.naturalHeight;
-    // Aspect ratio > 1.2 means the image is clearly wider than tall (landscape)
-    // Using 1.2 instead of 1.0 to avoid edge cases with nearly square images
-    if (aspectRatio > 1.2) {
-        item.classList.add('horizontal-image');
+    
+    // Define thresholds for classifying into 3 container types
+    // Threshold between vertical and square: (0.5625 + 1.0) / 2 = 0.78125
+    // Threshold between square and horizontal: (1.0 + 1.778) / 2 = 1.389
+    const verticalSquareThreshold = 0.78125;
+    const squareHorizontalThreshold = 1.389;
+    
+    // Remove any existing container classes
+    item.classList.remove('container-vertical', 'container-square', 'container-horizontal', 'horizontal-image');
+    
+    if (aspectRatio <= verticalSquareThreshold) {
+        // Portrait/vertical image - use 9:16 container
+        item.classList.add('container-vertical');
+    } else if (aspectRatio <= squareHorizontalThreshold) {
+        // Near-square image - use 1:1 container
+        item.classList.add('container-square');
+    } else {
+        // Landscape/horizontal image - use 16:9 container
+        item.classList.add('container-horizontal');
     }
 }
 
