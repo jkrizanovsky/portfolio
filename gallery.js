@@ -1,6 +1,12 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
+// Container aspect ratio thresholds for classifying images
+// Three container types: 9:16 (0.5625), 1:1 (1.0), 16:9 (1.778)
+// Thresholds are midpoints between adjacent ratios
+const VERTICAL_SQUARE_THRESHOLD = 0.78125;  // (0.5625 + 1.0) / 2
+const SQUARE_HORIZONTAL_THRESHOLD = 1.389;  // (1.0 + 1.778) / 2
+
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
@@ -126,9 +132,9 @@ function updateGalleryHeightVariable() {
 // Note: Video slides are excluded as they have their own CSS handling via .video-slide class
 // Rotated images are excluded as they have special rotation transforms applied
 // Container types:
-// - container-vertical: 9:16 ratio (portrait) - for images with aspect ratio <= 0.75
-// - container-square: 1:1 ratio - for images with aspect ratio between 0.75 and 1.33
-// - container-horizontal: 16:9 ratio (landscape) - for images with aspect ratio > 1.33
+// - container-vertical: 9:16 ratio (portrait) - for images with aspect ratio <= 0.78125
+// - container-square: 1:1 ratio - for images with aspect ratio between 0.78125 and 1.389
+// - container-horizontal: 16:9 ratio (landscape) - for images with aspect ratio > 1.389
 function detectHorizontalImages() {
     const galleryItems = document.querySelectorAll('.gallery-item:not(.video-slide):not(.rotated-image)');
     
@@ -157,19 +163,13 @@ function detectHorizontalImages() {
 function applyContainerClass(item, img) {
     const aspectRatio = img.naturalWidth / img.naturalHeight;
     
-    // Define thresholds for classifying into 3 container types
-    // Threshold between vertical and square: (0.5625 + 1.0) / 2 = 0.78125
-    // Threshold between square and horizontal: (1.0 + 1.778) / 2 = 1.389
-    const verticalSquareThreshold = 0.78125;
-    const squareHorizontalThreshold = 1.389;
-    
     // Remove any existing container classes
     item.classList.remove('container-vertical', 'container-square', 'container-horizontal', 'horizontal-image');
     
-    if (aspectRatio <= verticalSquareThreshold) {
+    if (aspectRatio <= VERTICAL_SQUARE_THRESHOLD) {
         // Portrait/vertical image - use 9:16 container
         item.classList.add('container-vertical');
-    } else if (aspectRatio <= squareHorizontalThreshold) {
+    } else if (aspectRatio <= SQUARE_HORIZONTAL_THRESHOLD) {
         // Near-square image - use 1:1 container
         item.classList.add('container-square');
     } else {
