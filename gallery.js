@@ -1,6 +1,11 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
+// Configuration constants for image scaling
+const GALLERY_MAX_WIDTH_RATIO = 0.9; // 90% of container width
+const GALLERY_MAX_HEIGHT_RATIO = 0.6; // 60% of viewport height
+const RESIZE_DEBOUNCE_MS = 250; // Debounce delay for resize events
+
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
@@ -92,13 +97,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Handle window resize to adjust gallery dimensions
+    // Handle window resize to adjust gallery dimensions (debounced)
+    let resizeTimeout;
     window.addEventListener('resize', function() {
-        const slides = document.querySelectorAll('.gallery-item');
-        const activeSlide = document.querySelector('.gallery-item.active');
-        if (activeSlide) {
-            adjustGalleryHeight(activeSlide);
-        }
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            const activeSlide = document.querySelector('.gallery-item.active');
+            if (activeSlide) {
+                adjustGalleryHeight(activeSlide);
+            }
+        }, RESIZE_DEBOUNCE_MS);
     });
 });
 
@@ -201,9 +209,10 @@ function adjustGalleryHeight(activeSlide) {
     
     // Wait for image to load if not already loaded
     if (!img.complete) {
+        // Use once: true to prevent memory leaks
         img.addEventListener('load', function() {
             setGalleryHeight(img, gallery, activeSlide);
-        });
+        }, { once: true });
     } else {
         setGalleryHeight(img, gallery, activeSlide);
     }
@@ -211,8 +220,8 @@ function adjustGalleryHeight(activeSlide) {
 
 // Helper function to set gallery and item dimensions
 function setGalleryHeight(img, gallery, activeSlide) {
-    const maxWidth = gallery.parentElement.offsetWidth * 0.9; // 90% of container width
-    const maxHeight = window.innerHeight * 0.6; // 60% of viewport height
+    const maxWidth = gallery.parentElement.offsetWidth * GALLERY_MAX_WIDTH_RATIO;
+    const maxHeight = window.innerHeight * GALLERY_MAX_HEIGHT_RATIO;
     
     const imgAspectRatio = img.naturalWidth / img.naturalHeight;
     
