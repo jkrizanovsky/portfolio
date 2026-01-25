@@ -124,7 +124,7 @@
 /* Rotate specific photos in photography slideshow */
 .gallery-item.photo-9 img,
 .gallery-item.photo-10 img {
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
 }
 
 .gallery-caption {

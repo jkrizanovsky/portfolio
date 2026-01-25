@@ -206,14 +206,25 @@ function showSlide(n) {
     adjustGalleryHeight(slides[currentSlideIndex - 1]);
 }
 
-// Function to adjust gallery container height based on active image
+// Function to adjust gallery container height based on active image or video
 function adjustGalleryHeight(activeSlide) {
     if (!activeSlide) return;
     
     const img = activeSlide.querySelector('img');
+    const video = activeSlide.querySelector('video');
+    const videoContainer = activeSlide.querySelector('.video-embed-container');
     const gallery = document.querySelector('.slideshow-gallery');
     
-    if (!img || !gallery) return;
+    if (!gallery) return;
+    
+    // Handle video slides
+    if (videoContainer || video) {
+        setVideoGalleryHeight(gallery, activeSlide);
+        return;
+    }
+    
+    // Handle image slides
+    if (!img) return;
     
     // Wait for image to load if not already loaded
     if (!img.complete) {
@@ -228,8 +239,9 @@ function adjustGalleryHeight(activeSlide) {
 
 // Helper function to set gallery and item dimensions
 function setGalleryHeight(img, gallery, activeSlide) {
-    const maxWidth = gallery.parentElement.offsetWidth * GALLERY_MAX_WIDTH_RATIO;
     const maxHeight = window.innerHeight * GALLERY_MAX_HEIGHT_RATIO;
+    // Use the same max height value as the max width
+    const maxWidth = maxHeight;
     
     const imgAspectRatio = img.naturalWidth / img.naturalHeight;
     
@@ -262,6 +274,36 @@ function setGalleryHeight(img, gallery, activeSlide) {
     gallery.style.height = displayHeight + 'px';
     
     // Set active slide dimensions to hug the image
+    activeSlide.style.width = displayWidth + 'px';
+    activeSlide.style.height = displayHeight + 'px';
+}
+
+// Helper function to set gallery and video dimensions (for video slides)
+function setVideoGalleryHeight(gallery, activeSlide) {
+    const maxHeight = window.innerHeight * GALLERY_MAX_HEIGHT_RATIO;
+    // Use the same max height value as the max width
+    const maxDimension = maxHeight;
+    
+    // Standard video aspect ratio is 16:9
+    const videoAspectRatio = 16 / 9;
+    
+    let displayWidth, displayHeight;
+    
+    // Calculate dimensions - scale the long edge to the maximum
+    if (videoAspectRatio > 1) {
+        // Landscape: width is the long edge
+        displayWidth = maxDimension;
+        displayHeight = displayWidth / videoAspectRatio;
+    } else {
+        // Portrait: height is the long edge
+        displayHeight = maxDimension;
+        displayWidth = displayHeight * videoAspectRatio;
+    }
+    
+    // Set gallery height to match video
+    gallery.style.height = displayHeight + 'px';
+    
+    // Set active slide dimensions
     activeSlide.style.width = displayWidth + 'px';
     activeSlide.style.height = displayHeight + 'px';
 }
