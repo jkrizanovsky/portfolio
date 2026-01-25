@@ -1,10 +1,6 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
-// Configuration constants for image scaling - FIXED dimensions for locked layout
-const GALLERY_FIXED_WIDTH = 340; // Fixed width in pixels for portrait orientation
-const RESIZE_DEBOUNCE_MS = 250; // Debounce delay for resize events
-
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
@@ -104,17 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Handle window resize to adjust gallery dimensions (debounced)
-    let resizeTimeout;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
-            const activeSlide = document.querySelector('.gallery-item.active');
-            if (activeSlide) {
-                adjustGalleryHeight(activeSlide);
-            }
-        }, RESIZE_DEBOUNCE_MS);
-    });
+    // Window resize is handled by CSS with fixed layout
+    // No JavaScript resizing needed
 });
 
 // Change slide by n (next/previous)
