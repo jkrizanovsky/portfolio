@@ -243,14 +243,25 @@ function setGalleryHeight(img, gallery, activeSlide) {
     // Use the same max height value as the max width
     const maxWidth = maxHeight;
     
-    const imgAspectRatio = img.naturalWidth / img.naturalHeight;
+    // Check if this is a rotated image using the class
+    const isRotated = activeSlide.classList.contains('rotated-image');
+    
+    let imgWidth = img.naturalWidth;
+    let imgHeight = img.naturalHeight;
+    
+    // For rotated images, swap dimensions to account for the rotation
+    if (isRotated) {
+        [imgWidth, imgHeight] = [imgHeight, imgWidth];
+    }
+    
+    const imgAspectRatio = imgWidth / imgHeight;
     
     let displayWidth, displayHeight;
     
     // Calculate dimensions based on which edge is longer
     if (imgAspectRatio > 1) {
         // Landscape: width is longer
-        displayWidth = Math.min(img.naturalWidth, maxWidth);
+        displayWidth = Math.min(imgWidth, maxWidth);
         displayHeight = displayWidth / imgAspectRatio;
         
         // If height exceeds max, scale down
@@ -260,7 +271,7 @@ function setGalleryHeight(img, gallery, activeSlide) {
         }
     } else {
         // Portrait or square: height is longer or equal
-        displayHeight = Math.min(img.naturalHeight, maxHeight);
+        displayHeight = Math.min(imgHeight, maxHeight);
         displayWidth = displayHeight * imgAspectRatio;
         
         // If width exceeds max, scale down
@@ -284,8 +295,11 @@ function setVideoGalleryHeight(gallery, activeSlide) {
     // Use the same max height value as the max width
     const maxDimension = maxHeight;
     
-    // Standard video aspect ratio is 16:9
-    const videoAspectRatio = 16 / 9;
+    // Check if this video should be displayed vertically using the class
+    const isVerticalVideo = activeSlide.classList.contains('vertical-video');
+    
+    // Standard video aspect ratio is 16:9 for horizontal, 9:16 for vertical
+    const videoAspectRatio = isVerticalVideo ? (9 / 16) : (16 / 9);
     
     let displayWidth, displayHeight;
     
