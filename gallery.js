@@ -1,12 +1,6 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
-// Container aspect ratio thresholds for classifying images
-// Three container types: 9:16 (0.5625), 1:1 (1.0), 16:9 (1.778)
-// Thresholds are midpoints between adjacent ratios
-const VERTICAL_SQUARE_THRESHOLD = 0.78125;  // (0.5625 + 1.0) / 2
-const SQUARE_HORIZONTAL_THRESHOLD = 1.389;  // (1.0 + 1.778) / 2
-
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
