@@ -125,8 +125,7 @@
 }
 
 /* Rotate specific photos in photography slideshow */
-.gallery-item.photo-9 img,
-.gallery-item.photo-10 img {
+.gallery-item.rotated-image img {
     transform: rotate(-90deg);
     /* Swap width and height to account for rotation */
     width: auto;

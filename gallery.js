@@ -243,8 +243,8 @@ function setGalleryHeight(img, gallery, activeSlide) {
     // Use the same max height value as the max width
     const maxWidth = maxHeight;
     
-    // Check if this is a rotated image (photo-9 or photo-10)
-    const isRotated = activeSlide.classList.contains('photo-9') || activeSlide.classList.contains('photo-10');
+    // Check if this is a rotated image using the class
+    const isRotated = activeSlide.classList.contains('rotated-image');
     
     let imgWidth = img.naturalWidth;
     let imgHeight = img.naturalHeight;
@@ -295,10 +295,8 @@ function setVideoGalleryHeight(gallery, activeSlide) {
     // Use the same max height value as the max width
     const maxDimension = maxHeight;
     
-    // Check if this is video 4, 5, or 6 (indices 3, 4, 5) - these should be vertical
-    const slides = document.querySelectorAll('.gallery-item');
-    const slideIndex = Array.from(slides).indexOf(activeSlide);
-    const isVerticalVideo = slideIndex >= 3 && slideIndex <= 5;
+    // Check if this video should be displayed vertically using the class
+    const isVerticalVideo = activeSlide.classList.contains('vertical-video');
     
     // Standard video aspect ratio is 16:9 for horizontal, 9:16 for vertical
     const videoAspectRatio = isVerticalVideo ? (9 / 16) : (16 / 9);
