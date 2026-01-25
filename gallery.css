@@ -55,8 +55,8 @@
 /* Gallery Items - Carousel Layout */
 .gallery-item {
     position: absolute;
-    /* Default dimensions - will be overridden by container size classes */
-    /* Width uses container height as reference for all calculations */
+    /* Default dimensions - will be overridden by JavaScript for scale-to-fit */
+    /* The container will hug the image with the longer edge at maximum */
     width: calc(100% * 9 / 16); /* Default to 9:16 vertical ratio */
     height: 100%;
     max-height: 100%;
@@ -78,6 +78,19 @@
     top: 50%;
     left: 50%;
     transform-origin: center center;
+}
+
+/* Scale-to-fit image container - dimensions set by JavaScript */
+/* The container hugs the image exactly with no blank spots */
+.gallery-item.scale-to-fit {
+    /* Dimensions will be set via inline styles by JavaScript */
+    /* Image will fill the container completely */
+}
+
+.gallery-item.scale-to-fit img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .gallery-item.active {
@@ -129,7 +142,7 @@
 }
 
 /* Container Size Classes - 3 sizes based on aspect ratio */
-/* All containers use the gallery height as the longest edge */
+/* These are used for video slides on video-editing page (kept unchanged) */
 /* The --gallery-height CSS variable is set by JavaScript for horizontal containers */
 
 /* 9:16 Vertical/Portrait container (default for vertical images) */
@@ -180,19 +193,17 @@
 }
 
 /* Rotate specific photos in photography slideshow */
-/* Rotated images use the same container system but with rotation transform */
+/* Rotated images use scale-to-fit with rotation transform */
 .gallery-item.rotated-image {
-    /* Container uses same dimensions as container-vertical */
-    width: calc(100% * 9 / 16);
-    height: 100%;
+    /* Dimensions will be set via inline styles by JavaScript */
 }
 
 .gallery-item.rotated-image img {
     transform: rotate(-90deg);
     /* When rotated -90deg, the image's height becomes its visual width and vice versa */
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .gallery-caption {
@@ -208,10 +219,10 @@
     text-align: center;
 }
 
-/* Slideshow Controls - Fixed positions */
+/* Slideshow Controls - Centered on slideshow horizontal axis */
 .slideshow-control {
     position: absolute;
-    /* Fixed vertical center position based on container */
+    /* Center on the slideshow gallery's vertical center */
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
@@ -220,7 +231,7 @@
     font-size: 3rem;
     padding: 0;
     cursor: pointer;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
+    transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
     z-index: 10;
     user-select: none;
     opacity: 0.9;
@@ -234,11 +245,11 @@
 }
 
 .slideshow-control.prev {
-    left: 2.5rem;
+    left: 0;
 }
 
 .slideshow-control.next {
-    right: 2.5rem;
+    right: 0;
 }
 
 /* Dots Indicators */
@@ -340,6 +351,15 @@
     height: 100%;
     object-fit: contain;
     background: #000;
+}
+
+/* Disable video playback on side items (prev/next) */
+/* Only the active/center video should be playable */
+.gallery-item.video-slide.prev .video-iframe,
+.gallery-item.video-slide.next .video-iframe,
+.gallery-item.video-slide.prev .local-video,
+.gallery-item.video-slide.next .local-video {
+    pointer-events: none;
 }
 
 /* Horizontal video slides - use 16:9 container 

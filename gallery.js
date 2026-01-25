@@ -1,12 +1,6 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
-// Container aspect ratio thresholds for classifying images
-// Three container types: 9:16 (0.5625), 1:1 (1.0), 16:9 (1.778)
-// Thresholds are midpoints between adjacent ratios
-const VERTICAL_SQUARE_THRESHOLD = 0.78125;  // (0.5625 + 1.0) / 2
-const SQUARE_HORIZONTAL_THRESHOLD = 1.389;  // (1.0 + 1.778) / 2
-
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
@@ -56,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set gallery height CSS variable for container sizing
         updateGalleryHeightVariable();
         
-        // Detect horizontal images and apply class
+        // Detect images and apply scale-to-fit sizing
         detectHorizontalImages();
         
         showSlide(currentSlideIndex);
@@ -73,9 +67,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Update gallery height variable on window resize
+        // Update gallery height variable and re-apply scale-to-fit on window resize
         window.addEventListener('resize', function() {
             updateGalleryHeightVariable();
+            // Re-apply scale-to-fit sizing for images (not videos)
+            detectHorizontalImages();
         });
     }
     
@@ -128,54 +124,64 @@ function updateGalleryHeightVariable() {
     }
 }
 
-// Detect horizontal (landscape) images and apply container size classes
+// Detect images and apply scale-to-fit container sizing
 // Note: Video slides are excluded as they have their own CSS handling via .video-slide class
-// Rotated images are excluded as they have special rotation transforms applied
-// Container types:
-// - container-vertical: 9:16 ratio (portrait) - for images with aspect ratio <= 0.78125
-// - container-square: 1:1 ratio - for images with aspect ratio between 0.78125 and 1.389
-// - container-horizontal: 16:9 ratio (landscape) - for images with aspect ratio > 1.389
+// Scale-to-fit: Container hugs the image exactly with no blank spots, respecting the longer edge maximum
 function detectHorizontalImages() {
-    const galleryItems = document.querySelectorAll('.gallery-item:not(.video-slide):not(.rotated-image)');
+    const galleryItems = document.querySelectorAll('.gallery-item:not(.video-slide)');
     
     galleryItems.forEach(item => {
         const img = item.querySelector('img');
         if (img) {
             // Check if image is already loaded
             if (img.complete && img.naturalWidth > 0) {
-                applyContainerClass(item, img);
+                applyScaleToFit(item, img);
             } else {
                 // Wait for image to load
                 img.onload = function() {
-                    applyContainerClass(item, img);
+                    applyScaleToFit(item, img);
                 };
             }
         }
     });
 }
 
-// Apply container size class based on image aspect ratio
-// Three container sizes:
-// - 9:16 (vertical/portrait) - aspect ratio 0.5625
-// - 1:1 (square) - aspect ratio 1.0
-// - 16:9 (horizontal/landscape) - aspect ratio 1.778
-// We choose the closest container to the actual image dimensions
-function applyContainerClass(item, img) {
-    const aspectRatio = img.naturalWidth / img.naturalHeight;
+// Apply scale-to-fit container sizing based on image's actual aspect ratio
+// The container hugs the image exactly, with the longer edge at maximum
+function applyScaleToFit(item, img) {
+    const gallery = document.querySelector('.slideshow-gallery');
+    if (!gallery) return;
     
-    // Remove any existing container classes
+    const galleryHeight = gallery.offsetHeight;
+    const isRotated = item.classList.contains('rotated-image');
+    
+    // For rotated images, swap width and height
+    let imgWidth = isRotated ? img.naturalHeight : img.naturalWidth;
+    let imgHeight = isRotated ? img.naturalWidth : img.naturalHeight;
+    
+    const aspectRatio = imgWidth / imgHeight;
+    
+    // Remove old container classes
     item.classList.remove('container-vertical', 'container-square', 'container-horizontal', 'horizontal-image');
     
-    if (aspectRatio <= VERTICAL_SQUARE_THRESHOLD) {
-        // Portrait/vertical image - use 9:16 container
-        item.classList.add('container-vertical');
-    } else if (aspectRatio <= SQUARE_HORIZONTAL_THRESHOLD) {
-        // Near-square image - use 1:1 container
-        item.classList.add('container-square');
+    // Add scale-to-fit class
+    item.classList.add('scale-to-fit');
+    
+    let containerWidth, containerHeight;
+    
+    if (aspectRatio >= 1) {
+        // Landscape or square: width is the longer edge, use gallery height as max width
+        containerWidth = galleryHeight;
+        containerHeight = galleryHeight / aspectRatio;
     } else {
-        // Landscape/horizontal image - use 16:9 container
-        item.classList.add('container-horizontal');
+        // Portrait: height is the longer edge, use gallery height as max height
+        containerHeight = galleryHeight;
+        containerWidth = galleryHeight * aspectRatio;
     }
+    
+    // Apply the dimensions
+    item.style.width = containerWidth + 'px';
+    item.style.height = containerHeight + 'px';
 }
 
 // Change slide by n (next/previous)
