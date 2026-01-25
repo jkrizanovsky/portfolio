@@ -69,23 +69,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Ensure all images align at the same vertical center point */
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
 }
 
 .gallery-item.active {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translate(-50%, -50%) scale(1);
     z-index: 3;
     pointer-events: auto;
-    cursor: grab;
-}
-
-.gallery-item.active:active {
-    cursor: grabbing;
+    cursor: pointer;
 }
 
 .gallery-item.prev {
     opacity: 0.5;
-    transform: translateX(-85%) scale(0.7);
+    transform: translate(calc(-50% - 85%), -50%) scale(0.7);
     z-index: 2;
     pointer-events: auto;
     box-shadow: none;
@@ -94,7 +94,7 @@
 
 .gallery-item.next {
     opacity: 0.5;
-    transform: translateX(85%) scale(0.7);
+    transform: translate(calc(-50% + 85%), -50%) scale(0.7);
     z-index: 2;
     pointer-events: auto;
     box-shadow: none;
@@ -103,12 +103,12 @@
 
 .gallery-item.prev:hover {
     opacity: 0.7;
-    transform: translateX(-85%) scale(0.75);
+    transform: translate(calc(-50% - 85%), -50%) scale(0.75);
 }
 
 .gallery-item.next:hover {
     opacity: 0.7;
-    transform: translateX(85%) scale(0.75);
+    transform: translate(calc(-50% + 85%), -50%) scale(0.75);
 }
 
 .gallery-item img {
@@ -124,7 +124,7 @@
 /* Rotate specific photos in photography slideshow */
 .gallery-item.photo-9 img,
 .gallery-item.photo-10 img {
-    transform: rotate(180deg);
+    transform: rotate(90deg);
 }
 
 .gallery-caption {
@@ -555,11 +555,11 @@
     }
 
     .gallery-item.prev {
-        transform: translateX(-90%) scale(0.6);
+        transform: translate(calc(-50% - 90%), -50%) scale(0.6);
     }
 
     .gallery-item.next {
-        transform: translateX(90%) scale(0.6);
+        transform: translate(calc(-50% + 90%), -50%) scale(0.6);
     }
 
     .slideshow-control {
@@ -628,12 +628,12 @@
 
     .gallery-item.prev {
         opacity: 0.3;
-        transform: translateX(-95%) scale(0.5);
+        transform: translate(calc(-50% - 95%), -50%) scale(0.5);
     }
     
     .gallery-item.next {
         opacity: 0.3;
-        transform: translateX(95%) scale(0.5);
+        transform: translate(calc(-50% + 95%), -50%) scale(0.5);
     }
 
     .slideshow-control {
