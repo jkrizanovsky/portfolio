@@ -91,6 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
             changeSlide(-1);
         }
     }
+    
+    // Handle window resize to adjust gallery dimensions
+    window.addEventListener('resize', function() {
+        const slides = document.querySelectorAll('.gallery-item');
+        const activeSlide = document.querySelector('.gallery-item.active');
+        if (activeSlide) {
+            adjustGalleryHeight(activeSlide);
+        }
+    });
 });
 
 // Change slide by n (next/previous)
@@ -176,6 +185,68 @@ function showSlide(n) {
     if (dots[currentSlideIndex - 1]) {
         dots[currentSlideIndex - 1].classList.add('active');
     }
+    
+    // Adjust container to fit the active image
+    adjustGalleryHeight(slides[currentSlideIndex - 1]);
+}
+
+// Function to adjust gallery container height based on active image
+function adjustGalleryHeight(activeSlide) {
+    if (!activeSlide) return;
+    
+    const img = activeSlide.querySelector('img');
+    const gallery = document.querySelector('.slideshow-gallery');
+    
+    if (!img || !gallery) return;
+    
+    // Wait for image to load if not already loaded
+    if (!img.complete) {
+        img.addEventListener('load', function() {
+            setGalleryHeight(img, gallery, activeSlide);
+        });
+    } else {
+        setGalleryHeight(img, gallery, activeSlide);
+    }
+}
+
+// Helper function to set gallery and item dimensions
+function setGalleryHeight(img, gallery, activeSlide) {
+    const maxWidth = gallery.parentElement.offsetWidth * 0.9; // 90% of container width
+    const maxHeight = window.innerHeight * 0.6; // 60% of viewport height
+    
+    const imgAspectRatio = img.naturalWidth / img.naturalHeight;
+    
+    let displayWidth, displayHeight;
+    
+    // Calculate dimensions based on which edge is longer
+    if (imgAspectRatio > 1) {
+        // Landscape: width is longer
+        displayWidth = Math.min(img.naturalWidth, maxWidth);
+        displayHeight = displayWidth / imgAspectRatio;
+        
+        // If height exceeds max, scale down
+        if (displayHeight > maxHeight) {
+            displayHeight = maxHeight;
+            displayWidth = displayHeight * imgAspectRatio;
+        }
+    } else {
+        // Portrait or square: height is longer or equal
+        displayHeight = Math.min(img.naturalHeight, maxHeight);
+        displayWidth = displayHeight * imgAspectRatio;
+        
+        // If width exceeds max, scale down
+        if (displayWidth > maxWidth) {
+            displayWidth = maxWidth;
+            displayHeight = displayWidth / imgAspectRatio;
+        }
+    }
+    
+    // Set gallery height to match image
+    gallery.style.height = displayHeight + 'px';
+    
+    // Set active slide dimensions to hug the image
+    activeSlide.style.width = displayWidth + 'px';
+    activeSlide.style.height = displayHeight + 'px';
 }
 
 // Function to pause all videos (YouTube iframes, Instagram iframes, and local videos)
