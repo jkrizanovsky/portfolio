@@ -1,6 +1,11 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
+// Configuration constants for image scaling
+const GALLERY_MAX_WIDTH_RATIO = 0.9; // 90% of container width
+const GALLERY_MAX_HEIGHT_RATIO = 0.6; // 60% of viewport height
+const RESIZE_DEBOUNCE_MS = 250; // Debounce delay for resize events
+
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
@@ -91,6 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
             changeSlide(-1);
         }
     }
+    
+    // Handle window resize to adjust gallery dimensions (debounced)
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            const activeSlide = document.querySelector('.gallery-item.active');
+            if (activeSlide) {
+                adjustGalleryHeight(activeSlide);
+            }
+        }, RESIZE_DEBOUNCE_MS);
+    });
 });
 
 // Change slide by n (next/previous)
@@ -176,6 +193,69 @@ function showSlide(n) {
     if (dots[currentSlideIndex - 1]) {
         dots[currentSlideIndex - 1].classList.add('active');
     }
+    
+    // Adjust container to fit the active image
+    adjustGalleryHeight(slides[currentSlideIndex - 1]);
+}
+
+// Function to adjust gallery container height based on active image
+function adjustGalleryHeight(activeSlide) {
+    if (!activeSlide) return;
+    
+    const img = activeSlide.querySelector('img');
+    const gallery = document.querySelector('.slideshow-gallery');
+    
+    if (!img || !gallery) return;
+    
+    // Wait for image to load if not already loaded
+    if (!img.complete) {
+        // Use once: true to prevent memory leaks
+        img.addEventListener('load', function() {
+            setGalleryHeight(img, gallery, activeSlide);
+        }, { once: true });
+    } else {
+        setGalleryHeight(img, gallery, activeSlide);
+    }
+}
+
+// Helper function to set gallery and item dimensions
+function setGalleryHeight(img, gallery, activeSlide) {
+    const maxWidth = gallery.parentElement.offsetWidth * GALLERY_MAX_WIDTH_RATIO;
+    const maxHeight = window.innerHeight * GALLERY_MAX_HEIGHT_RATIO;
+    
+    const imgAspectRatio = img.naturalWidth / img.naturalHeight;
+    
+    let displayWidth, displayHeight;
+    
+    // Calculate dimensions based on which edge is longer
+    if (imgAspectRatio > 1) {
+        // Landscape: width is longer
+        displayWidth = Math.min(img.naturalWidth, maxWidth);
+        displayHeight = displayWidth / imgAspectRatio;
+        
+        // If height exceeds max, scale down
+        if (displayHeight > maxHeight) {
+            displayHeight = maxHeight;
+            displayWidth = displayHeight * imgAspectRatio;
+        }
+    } else {
+        // Portrait or square: height is longer or equal
+        displayHeight = Math.min(img.naturalHeight, maxHeight);
+        displayWidth = displayHeight * imgAspectRatio;
+        
+        // If width exceeds max, scale down
+        if (displayWidth > maxWidth) {
+            displayWidth = maxWidth;
+            displayHeight = displayWidth / imgAspectRatio;
+        }
+    }
+    
+    // Set gallery height to match image
+    gallery.style.height = displayHeight + 'px';
+    
+    // Set active slide dimensions to hug the image
+    activeSlide.style.width = displayWidth + 'px';
+    activeSlide.style.height = displayHeight + 'px';
 }
 
 // Function to pause all videos (YouTube iframes, Instagram iframes, and local videos)
