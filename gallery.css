@@ -307,7 +307,9 @@
     background: #000;
 }
 
-/* Horizontal video slides - scale to match height of vertical container */
+/* Horizontal video slides - scale to match height of vertical container
+   Note: Uses 16:9 aspect ratio which is standard for most YouTube and modern video content.
+   Vertical videos should use the .vertical-video class for proper portrait display. */
 .gallery-item.video-slide:not(.vertical-video) {
     /* Wider container for horizontal videos, but same height as vertical */
     width: auto;

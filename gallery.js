@@ -108,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Detect horizontal (landscape) images and apply horizontal-image class
+// Note: Video slides are excluded as they have their own CSS handling via .video-slide class
+// Rotated images are excluded as they have special rotation transforms applied
 function detectHorizontalImages() {
     const galleryItems = document.querySelectorAll('.gallery-item:not(.video-slide):not(.rotated-image)');
     
@@ -130,7 +132,8 @@ function detectHorizontalImages() {
 // Apply horizontal-image class if image is landscape orientation
 function applyOrientationClass(item, img) {
     const aspectRatio = img.naturalWidth / img.naturalHeight;
-    // If width > height (landscape), add horizontal-image class
+    // Aspect ratio > 1.2 means the image is clearly wider than tall (landscape)
+    // Using 1.2 instead of 1.0 to avoid edge cases with nearly square images
     if (aspectRatio > 1.2) {
         item.classList.add('horizontal-image');
     }
