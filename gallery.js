@@ -1,11 +1,6 @@
 // Gallery/Slideshow Functionality
 let currentSlideIndex = 1;
 
-// Configuration constants for image scaling
-const GALLERY_MAX_WIDTH_RATIO = 0.9; // 90% of container width
-const GALLERY_MAX_HEIGHT_RATIO = 0.6; // 60% of viewport height
-const RESIZE_DEBOUNCE_MS = 250; // Debounce delay for resize events
-
 // Media descriptions - can be overridden per page
 const defaultMediaDescriptions = {
     1: {
@@ -105,17 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Handle window resize to adjust gallery dimensions (debounced)
-    let resizeTimeout;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
-            const activeSlide = document.querySelector('.gallery-item.active');
-            if (activeSlide) {
-                adjustGalleryHeight(activeSlide);
-            }
-        }, RESIZE_DEBOUNCE_MS);
-    });
+    // Window resize is handled by CSS with fixed layout
+    // No JavaScript resizing needed
 });
 
 // Change slide by n (next/previous)
@@ -207,141 +193,35 @@ function showSlide(n) {
 }
 
 // Function to adjust gallery container height based on active image or video
+// With fixed layout, this only ensures the slide is properly displayed
 function adjustGalleryHeight(activeSlide) {
     if (!activeSlide) return;
     
-    const img = activeSlide.querySelector('img');
-    const video = activeSlide.querySelector('video');
-    const videoContainer = activeSlide.querySelector('.video-embed-container');
     const gallery = document.querySelector('.slideshow-gallery');
     
     if (!gallery) return;
     
-    // Handle video slides
-    if (videoContainer || video) {
-        setVideoGalleryHeight(gallery, activeSlide);
-        return;
-    }
-    
-    // Handle image slides
-    if (!img) return;
-    
-    // Wait for image to load if not already loaded
-    if (!img.complete) {
-        // Use once: true to prevent memory leaks
-        img.addEventListener('load', function() {
-            setGalleryHeight(img, gallery, activeSlide);
-        }, { once: true });
-    } else {
-        setGalleryHeight(img, gallery, activeSlide);
-    }
+    // Fixed layout: container dimensions are set via CSS
+    // No dynamic resizing needed - all slides use same fixed container size
 }
 
-// Helper function to set gallery and item dimensions
+// Helper function to set gallery and item dimensions - FIXED LAYOUT VERSION
 function setGalleryHeight(img, gallery, activeSlide) {
-    const maxHeight = window.innerHeight * GALLERY_MAX_HEIGHT_RATIO;
-    // Use the same max height value as the max width
-    const maxWidth = maxHeight;
-    
-    // Check if this is a rotated image using the class
-    const isRotated = activeSlide.classList.contains('rotated-image');
-    
-    let imgWidth = img.naturalWidth;
-    let imgHeight = img.naturalHeight;
-    
-    // For rotated images, swap dimensions to account for the rotation
-    if (isRotated) {
-        [imgWidth, imgHeight] = [imgHeight, imgWidth];
-    }
-    
-    const imgAspectRatio = imgWidth / imgHeight;
-    
-    let displayWidth, displayHeight;
-    
-    // Calculate dimensions based on which edge is longer
-    if (imgAspectRatio > 1) {
-        // Landscape: width is longer
-        displayWidth = Math.min(imgWidth, maxWidth);
-        displayHeight = displayWidth / imgAspectRatio;
-        
-        // If height exceeds max, scale down
-        if (displayHeight > maxHeight) {
-            displayHeight = maxHeight;
-            displayWidth = displayHeight * imgAspectRatio;
-        }
-    } else {
-        // Portrait or square: height is longer or equal
-        displayHeight = Math.min(imgHeight, maxHeight);
-        displayWidth = displayHeight * imgAspectRatio;
-        
-        // If width exceeds max, scale down
-        if (displayWidth > maxWidth) {
-            displayWidth = maxWidth;
-            displayHeight = displayWidth / imgAspectRatio;
-        }
-    }
-    
-    // Set gallery height to match image
-    gallery.style.height = displayHeight + 'px';
-    
-    // Set active slide dimensions to hug the image
-    activeSlide.style.width = displayWidth + 'px';
-    activeSlide.style.height = displayHeight + 'px';
-    
-    // Position arrows at the middle of the image
-    positionArrows(displayHeight);
+    // Fixed layout: dimensions are controlled by CSS
+    // No dynamic resizing - container size stays constant
 }
 
-// Helper function to set gallery and video dimensions (for video slides)
+// Helper function to set gallery and video dimensions (for video slides) - FIXED LAYOUT VERSION
 function setVideoGalleryHeight(gallery, activeSlide) {
-    const maxHeight = window.innerHeight * GALLERY_MAX_HEIGHT_RATIO;
-    // Use the same max height value as the max width
-    const maxDimension = maxHeight;
-    
-    // Check if this video should be displayed vertically using the class
-    const isVerticalVideo = activeSlide.classList.contains('vertical-video');
-    
-    // Standard video aspect ratio is 16:9 for horizontal, 9:16 for vertical
-    const videoAspectRatio = isVerticalVideo ? (9 / 16) : (16 / 9);
-    
-    let displayWidth, displayHeight;
-    
-    // Calculate dimensions - scale the long edge to the maximum
-    if (videoAspectRatio > 1) {
-        // Landscape: width is the long edge
-        displayWidth = maxDimension;
-        displayHeight = displayWidth / videoAspectRatio;
-    } else {
-        // Portrait: height is the long edge
-        displayHeight = maxDimension;
-        displayWidth = displayHeight * videoAspectRatio;
-    }
-    
-    // Set gallery height to match video
-    gallery.style.height = displayHeight + 'px';
-    
-    // Set active slide dimensions
-    activeSlide.style.width = displayWidth + 'px';
-    activeSlide.style.height = displayHeight + 'px';
-    
-    // Position arrows at the middle of the image
-    positionArrows(displayHeight);
+    // Fixed layout: dimensions are controlled by CSS
+    // No dynamic resizing - container size stays constant
 }
 
-// Helper function to position arrows at the vertical center of the active slide
+// Helper function to position arrows - FIXED LAYOUT VERSION
+// Arrows are now positioned via CSS with fixed positions
 function positionArrows(slideHeight) {
-    const prevArrow = document.querySelector('.slideshow-control.prev');
-    const nextArrow = document.querySelector('.slideshow-control.next');
-    const gallery = document.querySelector('.slideshow-gallery');
-    
-    if (!prevArrow || !nextArrow || !gallery) return;
-    
-    // Calculate the top position to center arrows on the image
-    // Gallery is centered, so arrows should be at slideHeight / 2
-    const arrowTop = slideHeight / 2;
-    
-    prevArrow.style.top = arrowTop + 'px';
-    nextArrow.style.top = arrowTop + 'px';
+    // Fixed layout: arrow positions are controlled by CSS
+    // No dynamic positioning needed
 }
 
 // Function to pause all videos (YouTube iframes, Instagram iframes, and local videos)
