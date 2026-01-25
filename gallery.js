@@ -243,14 +243,25 @@ function setGalleryHeight(img, gallery, activeSlide) {
     // Use the same max height value as the max width
     const maxWidth = maxHeight;
     
-    const imgAspectRatio = img.naturalWidth / img.naturalHeight;
+    // Check if this is a rotated image (photo-9 or photo-10)
+    const isRotated = activeSlide.classList.contains('photo-9') || activeSlide.classList.contains('photo-10');
+    
+    let imgWidth = img.naturalWidth;
+    let imgHeight = img.naturalHeight;
+    
+    // For rotated images, swap dimensions to account for the rotation
+    if (isRotated) {
+        [imgWidth, imgHeight] = [imgHeight, imgWidth];
+    }
+    
+    const imgAspectRatio = imgWidth / imgHeight;
     
     let displayWidth, displayHeight;
     
     // Calculate dimensions based on which edge is longer
     if (imgAspectRatio > 1) {
         // Landscape: width is longer
-        displayWidth = Math.min(img.naturalWidth, maxWidth);
+        displayWidth = Math.min(imgWidth, maxWidth);
         displayHeight = displayWidth / imgAspectRatio;
         
         // If height exceeds max, scale down
@@ -260,7 +271,7 @@ function setGalleryHeight(img, gallery, activeSlide) {
         }
     } else {
         // Portrait or square: height is longer or equal
-        displayHeight = Math.min(img.naturalHeight, maxHeight);
+        displayHeight = Math.min(imgHeight, maxHeight);
         displayWidth = displayHeight * imgAspectRatio;
         
         // If width exceeds max, scale down
@@ -284,8 +295,13 @@ function setVideoGalleryHeight(gallery, activeSlide) {
     // Use the same max height value as the max width
     const maxDimension = maxHeight;
     
-    // Standard video aspect ratio is 16:9
-    const videoAspectRatio = 16 / 9;
+    // Check if this is video 4, 5, or 6 (indices 3, 4, 5) - these should be vertical
+    const slides = document.querySelectorAll('.gallery-item');
+    const slideIndex = Array.from(slides).indexOf(activeSlide);
+    const isVerticalVideo = slideIndex >= 3 && slideIndex <= 5;
+    
+    // Standard video aspect ratio is 16:9 for horizontal, 9:16 for vertical
+    const videoAspectRatio = isVerticalVideo ? (9 / 16) : (16 / 9);
     
     let displayWidth, displayHeight;
     
