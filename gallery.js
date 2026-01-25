@@ -287,6 +287,9 @@ function setGalleryHeight(img, gallery, activeSlide) {
     // Set active slide dimensions to hug the image
     activeSlide.style.width = displayWidth + 'px';
     activeSlide.style.height = displayHeight + 'px';
+    
+    // Position arrows at the middle of the image
+    positionArrows(displayHeight);
 }
 
 // Helper function to set gallery and video dimensions (for video slides)
@@ -320,6 +323,25 @@ function setVideoGalleryHeight(gallery, activeSlide) {
     // Set active slide dimensions
     activeSlide.style.width = displayWidth + 'px';
     activeSlide.style.height = displayHeight + 'px';
+    
+    // Position arrows at the middle of the image
+    positionArrows(displayHeight);
+}
+
+// Helper function to position arrows at the vertical center of the active slide
+function positionArrows(slideHeight) {
+    const prevArrow = document.querySelector('.slideshow-control.prev');
+    const nextArrow = document.querySelector('.slideshow-control.next');
+    const gallery = document.querySelector('.slideshow-gallery');
+    
+    if (!prevArrow || !nextArrow || !gallery) return;
+    
+    // Calculate the top position to center arrows on the image
+    // Gallery is centered, so arrows should be at slideHeight / 2
+    const arrowTop = slideHeight / 2;
+    
+    prevArrow.style.top = arrowTop + 'px';
+    nextArrow.style.top = arrowTop + 'px';
 }
 
 // Function to pause all videos (YouTube iframes, Instagram iframes, and local videos)
