@@ -3,7 +3,6 @@
     padding-top: 90px;
     min-height: 100vh;
     animation: fadeIn 0.5s ease-in-out;
-    overflow-x: hidden;
 }
 
 .page-hero {
@@ -38,7 +37,6 @@
     max-width: 900px;
     margin: 2.5rem auto;
     padding: 0 2rem;
-    overflow-x: hidden;
 }
 
 .slideshow-gallery {
@@ -51,7 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Gallery Items - Carousel Layout */
@@ -673,6 +671,11 @@
 
     .page-subtitle {
         font-size: 1.1rem;
+    }
+
+    /* Add overflow control for mobile/tablet to prevent horizontal scrolling */
+    .slideshow-container {
+        overflow-x: hidden;
     }
 
     /* Fixed layout - adjust fixed dimensions for tablet */
