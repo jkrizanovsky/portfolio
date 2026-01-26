@@ -51,7 +51,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: visible;
+    overflow: hidden;
 }
 
 /* Gallery Items - Carousel Layout */
@@ -680,7 +680,6 @@
         height: 50vh;
         min-height: 350px;
         max-height: 500px;
-        overflow-x: hidden;
     }
 
     /* Container sizes automatically scale with gallery height */
@@ -755,7 +754,6 @@
         height: 45vh;
         min-height: 300px;
         max-height: 400px;
-        overflow-x: hidden;
     }
 
     /* Container sizes automatically scale with gallery height */
