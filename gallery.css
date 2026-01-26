@@ -3,6 +3,7 @@
     padding-top: 90px;
     min-height: 100vh;
     animation: fadeIn 0.5s ease-in-out;
+    overflow-x: hidden;
 }
 
 .page-hero {
@@ -37,6 +38,7 @@
     max-width: 900px;
     margin: 2.5rem auto;
     padding: 0 2rem;
+    overflow-x: hidden;
 }
 
 .slideshow-gallery {
@@ -678,17 +680,18 @@
         height: 50vh;
         min-height: 350px;
         max-height: 500px;
+        overflow-x: hidden;
     }
 
     /* Container sizes automatically scale with gallery height */
     /* No need to override widths as they use calc() with percentages */
 
     .gallery-item.prev {
-        transform: translate(calc(-50% - 90%), -50%) scale(0.6);
+        transform: translate(calc(-50% - 80%), -50%) scale(0.6);
     }
 
     .gallery-item.next {
-        transform: translate(calc(-50% + 90%), -50%) scale(0.6);
+        transform: translate(calc(-50% + 80%), -50%) scale(0.6);
     }
 
     .slideshow-control {
@@ -744,6 +747,7 @@
 
     .slideshow-container {
         padding: 0 1rem;
+        overflow-x: hidden;
     }
 
     /* Fixed layout - adjust fixed dimensions for mobile */
@@ -751,6 +755,7 @@
         height: 45vh;
         min-height: 300px;
         max-height: 400px;
+        overflow-x: hidden;
     }
 
     /* Container sizes automatically scale with gallery height */
@@ -758,12 +763,12 @@
 
     .gallery-item.prev {
         opacity: 0.3;
-        transform: translate(calc(-50% - 95%), -50%) scale(0.5);
+        transform: translate(calc(-50% - 75%), -50%) scale(0.5);
     }
     
     .gallery-item.next {
         opacity: 0.3;
-        transform: translate(calc(-50% + 95%), -50%) scale(0.5);
+        transform: translate(calc(-50% + 75%), -50%) scale(0.5);
     }
 
     .slideshow-control {
